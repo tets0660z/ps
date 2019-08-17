@@ -7,13 +7,19 @@ Vue.use(VueRouter);
 
 const routes = [
     {
-        path: "/transaction",
-        component: require("./components/Transaction.vue").default
+        path: "/subject",
+        component: require("./components/Subjects.vue").default
+    },
+
+    {
+        path: "/classrecord",
+        component: require("./components/ClassRecord.vue").default
     }
 ];
 
 const router = new VueRouter({
-    routes // short for `routes: routes`
+    routes,
+    mode: "history"
 });
 
 Vue.component(
