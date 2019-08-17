@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <h1>Class Record</h1>
     <span
       class="tab"
       :class="{ activeTab: selectedTab === tab }"
