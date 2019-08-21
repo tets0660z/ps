@@ -5,7 +5,8 @@
     <div id="app">
         @include('includes.nav')
         @include('includes.content')
-    <router-view></router-view>
+        <router-view></router-view>
+        <vue-progress-bar></vue-progress-bar>
     </div>
 </body>
 </html>

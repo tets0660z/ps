@@ -24,7 +24,7 @@
           </td>
         </tr>
       </tbody>
-    </table>$subjects->links()
+    </table>
   </div>
 </template>
 
@@ -38,7 +38,11 @@ export default {
   name: "Subjects",
   methods: {
     displaySubjects() {
-      axios.get("api/subjects").then(({ data }) => (this.subjects = data));
+      // When Subjects.vue is first loaded start the progress bar
+      this.$Progress.start();
+      axios
+        .get("api/subjects")
+        .then(({ data }) => this.$Progress.finish((this.subjects = data)));
     }
   },
   created() {

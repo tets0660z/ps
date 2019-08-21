@@ -1,12 +1,14 @@
 <template>
   <div class="container">
-    <span
-      class="tab"
-      :class="{ activeTab: selectedTab === tab }"
-      v-for="(tab, index) in tabs"
-      :key="index"
-      @click="selectedTab = tab"
-    >{{ tab }}</span>
+    <div class="mb-3">
+      <span
+        class="tab"
+        :class="{ activeTab: selectedTab === tab }"
+        v-for="(tab, index) in tabs"
+        :key="index"
+        @click="selectedTab = tab"
+      >{{ tab }}</span>
+    </div>
     <lec v-show="selectedTab === 'Lec'"></lec>
     <lab v-show="selectedTab === 'Lab'"></lab>
     <LecLab4060 v-show="selectedTab === 'Lec-Lab40-60'"></LecLab4060>

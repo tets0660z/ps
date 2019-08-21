@@ -4,8 +4,9 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Subject;
-class SubjectsController extends Controller
+use App\Lecture;
+
+class LecturesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class SubjectsController extends Controller
      */
     public function index()
     {
-        return Subject::all();
+        //
     }
 
     /**
@@ -25,7 +26,11 @@ class SubjectsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+       return Lecture::create([
+           'title'=>$request['title'],
+           ]);
+            
     }
 
     /**
