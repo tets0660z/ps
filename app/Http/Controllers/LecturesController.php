@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Lecture;
+use Illuminate\Http\Request;
 
 class LecturesController extends Controller
 {
@@ -19,6 +18,16 @@ class LecturesController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -26,19 +35,29 @@ class LecturesController extends Controller
      */
     public function store(Request $request)
     {
-        // return ['asd'=>"asd"];
-    return Lecture::create([
-        'title' => $request['title']
-    ]);
+        return Lecture::create([
+            'title' => $request['title']
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Lecture  $lecture
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Lecture $lecture)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Lecture  $lecture
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Lecture $lecture)
     {
         //
     }
@@ -47,10 +66,10 @@ class LecturesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Lecture  $lecture
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Lecture $lecture)
     {
         //
     }
@@ -58,10 +77,10 @@ class LecturesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Lecture  $lecture
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Lecture $lecture)
     {
         //
     }

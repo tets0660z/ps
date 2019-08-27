@@ -40,6 +40,7 @@ export default {
     displaySubjects() {
       // When Subjects.vue is first loaded start the progress bar
       this.$Progress.start();
+      //fetch data and finish the progress bar to load
       axios
         .get("api/subjects")
         .then(({ data }) => this.$Progress.finish((this.subjects = data)));

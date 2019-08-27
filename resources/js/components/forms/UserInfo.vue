@@ -1,19 +1,13 @@
 <template>
   <div>
-    <form @submit.prevent="insertLecture" @keydown="form.onKeydown($event)">
+    <form @submit.prevent="insertLecture">
       <div class="form-group">
         <label>title</label>
-        <input
-          v-model="form.title"
-          type="text"
-          name="title"
-          class="form-control"
-          :class="{ 'is-invalid': form.errors.has('title') }"
-        />
-        <has-error :form="form" field="title"></has-error>
+        <input v-model="form.title" type="text" name="title" id="title" />
+        <label>description</label>
+        <input v-model="form.description" type="text" name="description" id="description" />
       </div>
-
-      <button :disabled="form.busy" type="submit" class="btn btn-primary">Log In</button>
+      <button type="submit" class="btn btn-primary">save</button>
     </form>
   </div>
 </template>
@@ -23,19 +17,16 @@ export default {
   data() {
     return {
       form: new Form({
-        title: ""
+        title: "",
+        description: ""
       })
     };
   },
   methods: {
     insertLecture() {
-      this.form.post("api/lectures").then(({ data }) => {
-        console.log(data);
-      });
+      this.form.post("api/lecture");
     }
-  },
-
-  name: "UserInformation"
+  }
 };
 </script>
 

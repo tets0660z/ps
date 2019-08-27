@@ -1970,7 +1970,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       // When Subjects.vue is first loaded start the progress bar
-      this.$Progress.start();
+      this.$Progress.start(); //fetch data and finish the progress bar to load
+
       axios.get("api/subjects").then(function (_ref) {
         var data = _ref.data;
         return _this.$Progress.finish(_this.subjects = data);
@@ -2109,29 +2110,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       form: new Form({
-        title: ""
+        title: "",
+        description: ""
       })
     };
   },
   methods: {
     insertLecture: function insertLecture() {
-      this.form.post("api/lectures").then(function (_ref) {
-        var data = _ref.data;
-        console.log(data);
-      });
+      this.form.post("api/lecture");
     }
-  },
-  name: "UserInformation"
+  }
 });
 
 /***/ }),
@@ -6612,7 +6604,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* input[type=\"text\"] {\r\n  border: 0;\r\n  background-color: transparent;\r\n  font-family: \"Times New Roman\";\r\n} */\n.quiz[data-v-3d5440b8] {\r\n  width: 30px;\n}\n.btn-primary[data-v-3d5440b8] {\r\n  width: 50px;\r\n  height: 50px;\r\n  padding: 10px;\n}\r\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* input[type=\"text\"] {\r\n  border: 0;\r\n  background-color: transparent;\r\n  font-family: \"Times New Roman\";\r\n} */\n.quiz[data-v-3d5440b8] {\r\n  width: 30px;\n}\n.btn-primary[data-v-3d5440b8] {\r\n  width: 50px;\r\n  height: 50px;\r\n  padding: 10px;\n}\r\n", ""]);
 
 // exports
 
@@ -39514,54 +39506,62 @@ var render = function() {
           submit: function($event) {
             $event.preventDefault()
             return _vm.insertLecture($event)
-          },
-          keydown: function($event) {
-            return _vm.form.onKeydown($event)
           }
         }
       },
       [
-        _c(
-          "div",
-          { staticClass: "form-group" },
-          [
-            _c("label", [_vm._v("title")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.form.title,
-                  expression: "form.title"
-                }
-              ],
-              staticClass: "form-control",
-              class: { "is-invalid": _vm.form.errors.has("title") },
-              attrs: { type: "text", name: "title" },
-              domProps: { value: _vm.form.title },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.form, "title", $event.target.value)
-                }
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", [_vm._v("title")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.title,
+                expression: "form.title"
               }
-            }),
-            _vm._v(" "),
-            _c("has-error", { attrs: { form: _vm.form, field: "title" } })
-          ],
-          1
-        ),
+            ],
+            attrs: { type: "text", name: "title", id: "title" },
+            domProps: { value: _vm.form.title },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form, "title", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("label", [_vm._v("description")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.description,
+                expression: "form.description"
+              }
+            ],
+            attrs: { type: "text", name: "description", id: "description" },
+            domProps: { value: _vm.form.description },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form, "description", $event.target.value)
+              }
+            }
+          })
+        ]),
         _vm._v(" "),
         _c(
           "button",
-          {
-            staticClass: "btn btn-primary",
-            attrs: { disabled: _vm.form.busy, type: "submit" }
-          },
-          [_vm._v("Log In")]
+          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+          [_vm._v("save")]
         )
       ]
     )
@@ -55264,14 +55264,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!****************************************************!*\
   !*** ./resources/js/components/forms/UserInfo.vue ***!
   \****************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _UserInfo_vue_vue_type_template_id_3d5440b8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UserInfo.vue?vue&type=template&id=3d5440b8&scoped=true& */ "./resources/js/components/forms/UserInfo.vue?vue&type=template&id=3d5440b8&scoped=true&");
 /* harmony import */ var _UserInfo_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserInfo.vue?vue&type=script&lang=js& */ "./resources/js/components/forms/UserInfo.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _UserInfo_vue_vue_type_style_index_0_id_3d5440b8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./UserInfo.vue?vue&type=style&index=0&id=3d5440b8&scoped=true&lang=css& */ "./resources/js/components/forms/UserInfo.vue?vue&type=style&index=0&id=3d5440b8&scoped=true&lang=css&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _UserInfo_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _UserInfo_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _UserInfo_vue_vue_type_style_index_0_id_3d5440b8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./UserInfo.vue?vue&type=style&index=0&id=3d5440b8&scoped=true&lang=css& */ "./resources/js/components/forms/UserInfo.vue?vue&type=style&index=0&id=3d5440b8&scoped=true&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -55303,7 +55304,7 @@ component.options.__file = "resources/js/components/forms/UserInfo.vue"
 /*!*****************************************************************************!*\
   !*** ./resources/js/components/forms/UserInfo.vue?vue&type=script&lang=js& ***!
   \*****************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -13,7 +13,7 @@ class CreateLectureTable extends Migration
      */
     public function up()
     {
-        Schema::create('lecture', function (Blueprint $table) {
+        Schema::create('lectures', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('instructor_id')->nullable();
