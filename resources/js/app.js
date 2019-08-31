@@ -5,13 +5,21 @@ window.Vue = require("vue");
 import VueRouter from "vue-router";
 import VueProgressBar from "vue-progressbar";
 import { Form, HasError, AlertError } from "vform";
+import VTooltip from "v-tooltip";
 
 window.Form = Form;
+//vue router
 Vue.use(VueRouter);
+// progress bar
 Vue.use(VueProgressBar, options);
 
+// vform
 Vue.component(HasError.name, HasError);
 Vue.component(AlertError.name, AlertError);
+
+// tooltip
+
+Vue.use(VTooltip);
 
 // progress bar
 const options = {

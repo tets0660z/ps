@@ -10,8 +10,7 @@ export default {
   name: "Lec",
   components: {
     UserInfo
-  },
-
+  }
 };
 </script>
 

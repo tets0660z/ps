@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Laboratory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Lecture;
 
-class LecturesController extends Controller
+class LaboratoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,18 +26,21 @@ class LecturesController extends Controller
      */
     public function store(Request $request)
     {
-    return Lecture::create([
-        'title' => $request['title']
-    ]);
+        return Laboratory::firstOrCreate([
+            'scores' => $request['rows'],
+            'exam' => $request['exam'],
+            'student_exam' => $request['studentExam'],
+        ]);
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Laboratory  $laboratory
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Laboratory $laboratory)
     {
         //
     }
@@ -46,10 +49,10 @@ class LecturesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Laboratory  $laboratory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Laboratory $laboratory)
     {
         //
     }
@@ -57,10 +60,10 @@ class LecturesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Laboratory  $laboratory
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Laboratory $laboratory)
     {
         //
     }
