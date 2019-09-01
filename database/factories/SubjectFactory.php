@@ -7,6 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Subject::class, function (Faker $faker) {
     return [
-        'subjects' => $faker->colorName,
+        'subject_code' => $faker->colorName,
+        'description' => $faker->name,
     ];
 });
