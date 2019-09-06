@@ -5,7 +5,7 @@
       <button type="button" @click="OT" v-tooltip="otMessage">OT(+)</button>
       <input type="text" placeholder="Search" />
     </div>
-    <table border="1">
+    <table border="1" class="table-hover">
       <thead>
         <tr>
           <th>#</th>
@@ -17,6 +17,7 @@
           </th>
           <th>QT</th>
           <th v-for="(otherTitle,id) in form.otherTitles" :key="id">
+            x
             <input v-model="otherTitle.value" class="quiz d-flex" />
           </th>
           <th>OT</th>
@@ -24,59 +25,53 @@
       </thead>
       <tbody>
         <tr>
-          <td colspan="4" class="text-center">male</td>
+          <td colspan="4" class="text-center">Male</td>
           <td v-for="(overAllScore,index) in form.overAllScores" :key="index">
             <input v-model="overAllScore.value" class="quiz d-flex" />
           </td>
           <td></td>
         </tr>
-        <tr>
-          <th>1</th>
-          <td>20111380</td>
-          <td>Terence Ralph C. Raga-as</td>
-          <td>BSIT</td>
+        <tr v-for="student in students" :key="student.id" v-show="student.gender ==='male'">
+          <td>{{students.index}}</td>
+          <td>{{student.id_number}}</td>
+          <td>
+            <span>{{student.name}}</span>
+          </td>
+          <td>{{student.course}}</td>
           <td v-for="(quiz,index) in form.quizzes" :key="index">
-            <input v-model="quiz.value" class="quiz d-flex" />
+            <input v-model="quiz.value[index]" class="quiz d-flex" />
           </td>
           <td>{{totalQuiz}}</td>
           <td v-for="(otherTitle,id) in form.otherTitles" :key="id">
             <input v-model="otherTitle.value" class="quiz d-flex" />
           </td>
         </tr>
-        <!-- <tr>
-          <td colspan="4"></td>
-          <td v-for="(date,id) in form.dates" :key="id">
-            <input v-model="date.value" class="d-flex" type="date" />
-          </td>
-        </tr>-->
-      </tbody>
-    </table>
-    <button type="submit">save</button>
-
-    <table border="1" class="my-3">
-      <thead>
+        <!-- ./MALE -->
         <tr>
-          <th colspan="2" class="tex-center">Legend:</th>
+          <td colspan="4" class="text-center">Female</td>
+          <td v-for="(overAllScore,index) in form.overAllScores" :key="index">
+            <input v-model="overAllScore.value" class="quiz d-flex" />
+          </td>
+          <td></td>
         </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(title,index) in form.titles" :key="index">
-          <td>{{title.value}}</td>
+        <tr v-for="student in students" :key="student.id" v-show="student.gender ==='female'">
+          <td>{{students.index}}</td>
+          <td>{{student.id_number}}</td>
           <td>
-            <input type="text" class="legend" />
+            <span>{{student.name}}</span>
+          </td>
+          <td>{{student.course}}</td>
+          <td v-for="(quiz,index) in form.quizzes" :key="index">
+            <input v-model="quiz.value" class="quiz d-flex" v-once />
+          </td>
+          <td>{{totalQuiz}}</td>
+          <td v-for="(otherTitle,id) in form.otherTitles" :key="id">
+            <input v-model="otherTitle.value" class="quiz d-flex" />
           </td>
         </tr>
+        <!-- ./FEMALE -->
       </tbody>
     </table>
-    <form @submit.prevent="insertLecture">
-      <!-- <div class="form-group">
-        <label>title</label>
-        <input v-model="form.title" type="text" name="title" id="title" />
-        <label>description</label>
-        <input v-model="form.description" type="text" name="description" id="description" />
-      </div>
-      <button type="submit" class="btn btn-primary">save</button>-->
-    </form>
   </div>
 </template>
 
@@ -95,22 +90,33 @@ export default {
       }),
       otMessage:
         "Other Class Standing\nSIT Faculty:\nRequirement: \nat least 3 other class standings per grading.",
-      quizMessage: " Click to add Quiz"
+      quizMessage: " Click to add Quiz",
+      students: ""
     };
   },
+
   methods: {
     insertLecture() {
       this.form.post("api/lecture");
     },
     addQuiz: function() {
-      this.form.quizzes.push({ value: "" });
+      this.form.quizzes.push({ value: [] });
       this.form.titles.push({ value: "" });
       this.form.overAllScores.push({ value: "" });
       this.form.dates.push({ value: "" });
     },
     OT: function() {
       this.form.otherTitles.push({ value: "" });
+    },
+    displayStudents() {
+      this.$Progress.start();
+      axios
+        .get("api/students")
+        .then(({ data }) => this.$Progress.finish((this.students = data)));
     }
+  },
+  created() {
+    this.displayStudents();
   },
   computed: {
     totalQuiz() {

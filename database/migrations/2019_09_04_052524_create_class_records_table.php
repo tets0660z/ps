@@ -27,9 +27,15 @@ class CreateClassRecordsTable extends Migration
             $table->integer('lab_student_score')->nullable();
             $table->integer('lab_score')->nullable();
            
+            $table->unsignedBigInteger('user_id')->index();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->unsignedBigInteger('imported_classlists_id')->index();
+            $table->foreign('imported_classlists_id')->references('id')->on('imported_classlists')->onDelete('cascade');
+
             $table->unsignedBigInteger('subjects_id')->index();
             $table->foreign('subjects_id')->references('id')->on('subjects')->onDelete('cascade');
-           
+
             $table->timestamps();
         });
     }

@@ -4,9 +4,9 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Lecture;
-
-class LecturesController extends Controller
+use App\ImportedClasslist;
+use DB;
+class ImportedClasslistsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,9 @@ class LecturesController extends Controller
      */
     public function index()
     {
-        //
+        return DB::table('imported_classlists')
+        ->select(['sections','student','gender','course','id'])
+        ->distinct('sections')->get();
     }
 
     /**
@@ -26,9 +28,7 @@ class LecturesController extends Controller
      */
     public function store(Request $request)
     {
-    return Lecture::create([
-        'title' => $request['title']
-    ]);
+        //
     }
 
     /**

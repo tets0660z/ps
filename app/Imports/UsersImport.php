@@ -1,24 +1,38 @@
 <?php
-
 namespace App\Imports;
 
-use App\User;
-use Illuminate\Support\Facades\Hash;
-use Maatwebsite\Excel\Concerns\ToModel;
-
-class UsersImport implements ToModel
+use App\Instructor;
+use App\Classlist;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithMappedCells;
+class UsersImport implements ToCollection,WithMappedCells
 {
-    /**
-     * @param array $row
-     *
-     * @return User|null
-     */
-    public function model(array $row)
+    public function mapping(): array
     {
-        return new User([
-           'name'     => $row[0],
-           'email'    => $row[1], 
-           'password' => Hash::make($row[2]),
-        ]);
+        return [
+            'name'  => 'C7',
+            'sections' => 'C3',
+        ];
+    }
+    // public function model(array $row)
+    // {
+    //     return new User([
+    //         'name' => $row['name'],
+    //         'email' => $row['email'],
+    //     ]);
+    // }
+    public function collection(Collection $rows)
+    {
+        foreach ($rows as $row) 
+        {
+            Instructor::create([
+                'name' => $row['name'],
+            ]);
+
+            Classlist::create([
+                'sections' => $row[1],
+            ]);
+        }
     }
 }

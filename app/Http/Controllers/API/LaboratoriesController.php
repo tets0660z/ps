@@ -15,7 +15,7 @@ class LaboratoriesController extends Controller
      */
     public function index()
     {
-        //
+        return Student::all();
     }
 
     /**
@@ -27,9 +27,9 @@ class LaboratoriesController extends Controller
     public function store(Request $request)
     {
         return Laboratory::firstOrCreate([
-            'scores' => $request['rows'],
-            'exam' => $request['exam'],
-            'student_exam' => $request['studentExam'],
+            'titles' => $request['titles'],
+            'lab_student_score' => $request['labStudentScores'],
+            'lab_score' => $request['labScores'],
         ]);
 
     }

@@ -20,8 +20,6 @@ class CreateSubjectsTable extends Migration
             $table->String('term')->nullable();
             $table->String('year_level')->nullable();
             $table->integer('units')->nullable();
-            $table->integer('lec')->nullable();
-            $table->integer('lab')->nullable();
             $table->timestamps();
         });
     }

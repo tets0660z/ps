@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClasslistsTable extends Migration
+class CreateImportedClasslistsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,17 @@ class CreateClasslistsTable extends Migration
      */
     public function up()
     {
-        Schema::create('classlists', function (Blueprint $table) {
+        Schema::create('imported_classlists', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->String('sections');
-            $table->String('days');
-            $table->String('time');
+            $table->String('sections')->nullable();
+            $table->String('gender')->nullable();
+            $table->String('course')->nullable();
+            $table->String('days')->nullable();
+            $table->String('time')->nullable();
             $table->String('room')->nullable();
-            $table->String('term');
+            $table->String('term')->nullable();
             $table->String('units')->nullable();
-            $table->String('subjects');
-
-            $table->unsignedBigInteger('instructors_id')->index();
-            $table->foreign('instructors_id')->references('id')->on('instructors')->onDelete('cascade');
+            $table->String('student')->nullable();
             $table->timestamps();
         });
     }
@@ -36,6 +35,6 @@ class CreateClasslistsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('classlists');
+        Schema::dropIfExists('imported_classlists');
     }
 }

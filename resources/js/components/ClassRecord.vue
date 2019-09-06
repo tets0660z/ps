@@ -9,10 +9,14 @@
         @click="selectedTab = tab"
       >{{ tab }}</span>
     </div>
-    <lec v-show="selectedTab === 'Lec'"></lec>
-    <lab v-show="selectedTab === 'Lab'"></lab>
-    <LecLab4060 v-show="selectedTab === 'Lec-Lab40-60'"></LecLab4060>
-    <LecLab5050 v-show="selectedTab === 'Lec-Lab50-50'"></LecLab5050>
+    <lec v-show="selectedTab === 'Lec'" :classlists="classlists"></lec>
+    <lab
+      v-show="selectedTab === 'Lab'"
+      :classlists="classlists"
+      @insert-student-score="studentScore"
+    ></lab>
+    <LecLab4060 v-show="selectedTab === 'Lec-Lab40-60'" :classlists="classlists"></LecLab4060>
+    <LecLab5050 v-show="selectedTab === 'Lec-Lab50-50'" :classlists="classlists"></LecLab5050>
     <LecLab6040 v-show="selectedTab === 'Lec-Lab60-40'"></LecLab6040>
   </div>
 </template>
@@ -25,12 +29,28 @@ import LecLab5050 from "./forms/LecLab5050";
 import LecLab6040 from "./forms/LecLab6040";
 
 export default {
-  props: Lec,
   data() {
     return {
       tabs: ["Lec", "Lab", "Lec-Lab40-60", "Lec-Lab50-50", "Lec-Lab60-40"],
-      selectedTab: "Lec"
+      selectedTab: "Lec",
+      classlists: [],
+      gender: "female",
+      labScore: []
     };
+  },
+  methods: {
+    displayClasslists() {
+      this.$Progress.start();
+      axios
+        .get("api/classlists")
+        .then(({ data }) => this.$Progress.finish((this.classlists = data)));
+    },
+    studentScore: function(value) {
+      this.labScore = value;
+    }
+  },
+  created() {
+    this.displayClasslists();
   },
   components: {
     Lec,

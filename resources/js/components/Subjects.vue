@@ -14,13 +14,11 @@
         <tr v-for="subject in subjects" :key="subject.id">
           <td>{{subject.id}}</td>
           <td>
-            <router-link to="#">{{ subject.subjects }}</router-link>
+            <router-link to="#">{{ subject.subject_code }}</router-link>
           </td>
-          <td>Web Programming 1</td>
-          <td>
-            <router-link to="classrecord">IDC1</router-link>
-            <router-link to="classrecord">IDC2</router-link>
-            <router-link to="classrecord">IDA1</router-link>
+          <td>{{ subject.description }}</td>
+          <td v-for="classlist in classlists" :key="classlist.id">
+            <router-link to="classrecord">{{classlist.sections}}</router-link>
           </td>
         </tr>
       </tbody>
@@ -32,22 +30,28 @@
 export default {
   data() {
     return {
-      subjects: null
+      subjects: null,
+      classlists: ""
     };
   },
   name: "Subjects",
   methods: {
     displaySubjects() {
-      // When Subjects.vue is first loaded start the progress bar
       this.$Progress.start();
-      //fetch data and finish the progress bar to load
       axios
         .get("api/subjects")
         .then(({ data }) => this.$Progress.finish((this.subjects = data)));
+    },
+    displayClasslists() {
+      this.$Progress.start();
+      axios
+        .get("api/classlists")
+        .then(({ data }) => this.$Progress.finish((this.classlists = data)));
     }
   },
   created() {
     this.displaySubjects();
+    this.displayClasslists();
   }
 };
 </script>

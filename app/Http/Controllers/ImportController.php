@@ -10,7 +10,7 @@ class ImportController extends Controller
 {
     public function import() 
     {
-        Excel::import(new UsersImport, storage_path('../../../../\Users\dsfga\Desktop\sample.xlsx'));
+        Excel::import(new UsersImport, storage_path('../../../../\Users\dsfga\Desktop\classlist.xlsx'));
         
         return redirect('/home')->with('success', 'All good!');
     }

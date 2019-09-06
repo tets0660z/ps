@@ -2,137 +2,70 @@
   <div>
     <div class="mb-2">
       <input type="text" placeholder="Search" />
-      <table>
-        <div>
-          FG
-          <button type="button" @click="addScore">(+)</button>
-          <button type="button" @click="addScore">(-)</button>
-        </div>
-        <div>
-          M
-          <button type="button" @click="addScore">(+)</button>
-          <button type="button" @click="addScore">(-)</button>
-        </div>
-        <div>
-          F
-          <button type="button" @click="addScore">(+)</button>
-          <button type="button" @click="addScore">(-)</button>
-        </div>
-      </table>
     </div>
-    <form @submit.prevent="insertLab">
-      <table border="1">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>ID Number</th>
-            <th>Name</th>
-            <th>Course</th>
-            <th v-for="(row,index) in form.rows" :key="index">
-              <input v-model="row.title" name="title" id="title" class="size d-flex" />
-            </th>
-            <th>E</th>
-            <th>Total</th>
-            <th>1st Grading</th>
-
-            <!-- ./ First Grading -->
-
-            <th v-for="(row,index) in form.rows" :key="index">
-              <input v-model="row.title" name="title" id="title" class="size d-flex" />
-            </th>
-            <th>E</th>
-            <th>Total</th>
-            <th>Midterm</th>
-
-            <!-- ./ Midterm -->
-          </tr>
-        </thead>
+    <form @submit.prevent="insertLaboratory">
+      <table border="1" class="table-hover">
+        <thead></thead>
         <tbody>
-          <tr>
-            <td colspan="4" class="text-center">male</td>
-            <td v-for="(row,index) in form.rows" :key="index">
-              <input v-model="row.score" name="score" id="score" class="size d-flex" />
-            </td>
+          <tr v-for="(classlist,index) in classlists" :key="'lab'+ classlist.id">
+            <td>{{index +1}}</td>
             <td>
-              <input type="text" class="size" v-model="form.exam" name="exam" />
+              <span>{{classlist.student}}</span>
             </td>
-            <td>{{total}}</td>
-            <th>Grade</th>
+            <button type="button" @click="addScore(index)">score(+)</button>
 
-            <!-- ./ First Grading -->
-            <!-- ./ Midterm -->
-          </tr>
-          <!-- STUDENT SCORES -->
-          <tr>
-            <th>1</th>
-            <td>20111380</td>
-            <td>Terence Ralph C. Raga-as</td>
-            <td>BSIT</td>
-            <td v-for="(row,index) in form.rows" :key="index">
+            <td v-for="(labStudentScore,i) in form.labStudentScores" :key="i">
               <input
-                v-model="row.studentScore"
-                name="studentScore"
-                id="studentScore"
-                class="size d-flex"
+                v-model="labStudentScore.value[index]"
+                @mouseover="col"
+                v-on:keyup="emitToClassrecord"
               />
             </td>
-            <td>
-              <input type="text" class="size" v-model="form.studentExam" name="studentExam" />
-            </td>
-            <td>{{studentOverAllTotalScores}}</td>
-            <!-- ./ First Grading -->
-            <!-- ./ Midterm -->
+
+            <td>{{studentTotalScores}}</td>
           </tr>
+          <!-- ./MALE -->
         </tbody>
       </table>
-      <button type="submit">save</button>
     </form>
   </div>
 </template>
 
 <script>
 export default {
+  props: ["classlists"],
   data() {
     return {
       form: new Form({
-        rows: [],
-        exam: "",
-        studentExam: ""
-        // scores: [],
-        // studentScores: [],
-        // titles: []
+        labStudentScores: [],
+        studentExam: 0
       })
     };
   },
+
   methods: {
-    insertLab() {
-      this.form.post("api/laboratory");
+    // referenced to classrecord.
+    emitToClassrecord(value) {
+      this.$emit("insert-student-score", this.form.labStudentScores);
+      // alert("asd");
     },
-    addScore: function() {
-      this.form.rows.push({ title: "", score: "", studentScore: "" });
-      // this.form.scores.push();
-      // this.form.studentScores.push();
-      // this.form.titles.push();
+    addScore: function(index) {
+      this.form.labStudentScores.push({ value: [] });
+    },
+    col: function(e) {
+      let x = e.target.selectedIndex;
+      console.log(x);
     }
   },
   computed: {
-    totalScores() {
-      return this.form.rows.reduce(
-        (acc, item) => acc + parseInt(item.score),
+    studentTotalScores: function() {
+      return this.form.labStudentScores.reduce(
+        (acc, item) => acc + parseInt(item.value),
         0
       );
     },
-    studentTotalScores() {
-      return this.form.rows.reduce(
-        (acc, item) => acc + parseInt(item.studentScore),
-        0
-      );
-    },
-    studentOverAllTotalScores() {
-      return this.studentTotalScores + parseInt(this.form.studentExam);
-    },
-    total() {
-      return this.totalScores + parseInt(this.form.exam);
+    studentTotal: function() {
+      return parseInt(this.form.studentExam) + this.studentTotalScores;
     }
   }
 };
@@ -145,7 +78,7 @@ export default {
   font-family: "Times New Roman";
 }
 
-.size {
+.quiz {
   width: 30px;
 }
 /* input[type="date"] {
@@ -156,4 +89,4 @@ export default {
   height: 50px;
   padding: 10px;
 }
-</style>
+</style>  
