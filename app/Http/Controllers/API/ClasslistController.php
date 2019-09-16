@@ -4,8 +4,9 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Subject;
-class SubjectsController extends Controller
+use DB;
+use App\ImportedClasslist;
+class ClasslistController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,8 @@ class SubjectsController extends Controller
      */
     public function index()
     {
-        return Subject::all();
+    return DB::table('imported_classlists')->distinct()->get('sections');
+    // return ImportedClasslist::all();
     }
 
     /**

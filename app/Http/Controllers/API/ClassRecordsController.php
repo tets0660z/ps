@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use DB;
-use App\ClassRecord;
+// use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
+use App\Http\Controllers\Controller;
+use App\ClassRecord;
 class ClassRecordsController extends Controller
 {
     /**
@@ -16,8 +17,9 @@ class ClassRecordsController extends Controller
      */
     public function index()
     {
-        //
+        
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -26,14 +28,13 @@ class ClassRecordsController extends Controller
      */
     public function store(Request $request)
     {
-        return ClassRecord::create([
-            'titles' => $request['title'],
-            
-        ]);
-        // return ['asd'=>'terence'];
-
+   $titles = $request['myStudentId'];
+//    $myString = implode(',', array_column($titles, 'value'));
+   dd($titles);
+         ClassRecord::create(['titles'=>$titles]);
+        //  ClassRecord::insert(['titles'=>$titles]);
     }
-
+    
     /**
      * Display the specified resource.
      *

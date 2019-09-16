@@ -1,12 +1,11 @@
 <template>
   <div>
     <div class="mb-2">
+      <label for="score">Add Score:</label>
       <button type="button" @click="addScore">FG(+)</button>
-      <button type="button" @click="addScore">M(+)</button>
-      <button type="button" @click="addScore">F(+)</button>
-      <!-- <input type="text" placeholder="Search" /> -->
     </div>
-    <form @submit.prevent="insertScore" method="POST">
+
+    <form @submit.prevent="insertScore">
       <table border="1" class="table-hover">
         <thead>
           <tr>
@@ -15,7 +14,7 @@
             <th>Name</th>
             <th>Course</th>
             <th v-for="(title,index) in form.titles" :key="index">
-              <input v-model="title.value" class="quiz d-flex" name="title" />
+              <input v-model="title.titles" class="quiz d-flex" name="titleszz" />
             </th>
             <th>Total</th>
             <th>1st Grading</th>
@@ -25,7 +24,7 @@
           <tr>
             <th colspan="4" class="text-center bg-primary">Male</th>
             <td v-for="(overAllScore,index) in form.overAllScores" :key="index">
-              <input v-model="overAllScore.value" class="quiz d-flex" name="over_all_score" />
+              <input v-model="overAllScore.underScore" class="quiz d-flex" name="labScore" />
             </td>
             <th>{{overAllScores}}</th>
             <td></td>
@@ -38,12 +37,19 @@
             :key="'labm'+ classlist.id"
             v-show="classlist.gender ==='male'"
           >
-            <td>{{index +1}}</td>
+            <td>
+              <input type="text" v-model="classlist.id" />
+            </td>
             <td></td>
-            <td>{{classlist.student}}</td>
+            <td>
+              {{classlist.student}}
+              <input type="text" v-model="classlist.id" hidden />
+            </td>
             <td>{{classlist.course}}</td>
             <td v-for="(labStudentScore,i) in form.labStudentScores" :key="i">
-              <input v-model="labStudentScore.value[index]" name="student_scores" />
+              <input v-model="labStudentScore.studentScores[index]" name="student_scores" />
+              <input type="text" :value="index" name="gridRowMale" hidden />
+              <input type="text" :value="i" name="gridColMale" hidden />
             </td>
 
             <td>{{studentTotalScores[index]}}</td>
@@ -70,7 +76,10 @@
             <td>{{classlist.student}}</td>
             <td>{{classlist.course}}</td>
             <td v-for="(labStudentScore,i) in form.labStudentScores" :key="i">
-              <input v-model="labStudentScore.value[index]" />
+              <input v-model="labStudentScore.studentScores[index]" name="labStudentScore" />
+              <input type="text" :value="index" name="gridRowFemale" hidden />
+              <input type="text" :value="i" name="gridColFemale" hidden />
+              <input type="text" :value="classlist.id" name="studentId" hidden />
             </td>
 
             <td>{{studentTotalScores[index]}}</td>
@@ -79,27 +88,35 @@
         </tbody>
       </table>
       <button type="submit">save</button>
-      <Transmutation :HPS="overAllScores"></Transmutation>
+      <!-- <Transmutation :HPS="overAllScores"></Transmutation> -->
     </form>
+    <div class="row">
+      <div class="col-lg-6">Legend</div>
+      <div class="col-lg-6">
+        <!-- <Accordion></Accordion> -->
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import Transmutation from "./Transmutation";
+import Accordion from "./Accordion";
 export default {
   props: ["classlists"],
   components: {
-    Transmutation
+    Transmutation,
+    Accordion
   },
   data() {
     return {
       form: new Form({
         labStudentScores: [],
-        studentExam: 0,
         titles: [],
-        overAllScores: []
-      }),
-      count: 4
+        overAllScores: [],
+        studentId: [],
+        studentId: ""
+      })
     };
   },
 
@@ -107,14 +124,14 @@ export default {
     studentTotalScores: function() {
       return this.classlists.map((c, index) => {
         return this.form.labStudentScores.reduce((acc, item) => {
-          const value = parseInt(item.value[index], 10) || 0;
+          const value = parseInt(item.studentScores[index], 10) || 0;
           return acc + value;
         }, 0);
       });
     },
     overAllScores: function() {
       return this.form.overAllScores.reduce(
-        (acc, item) => acc + parseInt(item.value, 10) || 0,
+        (acc, item) => acc + parseInt(item.underScore, 10) || 0,
         0
       );
     },
@@ -125,13 +142,12 @@ export default {
   },
   methods: {
     insertScore() {
-      this.form.post("/api/records/");
+      this.form.post("api/classrecords");
     },
-    transScore(value) {},
     addScore: function() {
-      this.form.labStudentScores.push({ value: [] });
-      this.form.titles.push({ value: "" });
-      this.form.overAllScores.push({ value: [] });
+      this.form.labStudentScores.push({ studentScores: [] });
+      this.form.titles.push({ titles: [] });
+      this.form.overAllScores.push({ underScore: [] });
     }
   }
 };

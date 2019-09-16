@@ -18,7 +18,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('records', 'API\ClassRecordsController');
-Route::apiResource('subjects', 'API\SubjectsController');
-Route::apiResource('classlists', 'API\ImportedClasslistsController');
-Route::apiResource('laboratory', 'API\LaboratoriesController');
+Route::apiResource('classrecords', 'API\ClassRecordsController');
+// Route::apiResource('sections', 'API\ClasslistController');
+// Route::apiResource('classlists', 'API\ImportedClasslistsController');
+Route::get('sections','API\ClasslistController@index')->name('section');
+
+Route::get('classlists/{section}','API\ImportedClasslistsController@show');
+// Route::get('classlists/{section}', function ($section){
+//     return $section;
+// });

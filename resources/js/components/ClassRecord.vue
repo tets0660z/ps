@@ -14,7 +14,7 @@
     <LecLab4060 v-show="selectedTab === 'Lec-Lab40-60'" :classlists="classlists"></LecLab4060>
     <LecLab5050 v-show="selectedTab === 'Lec-Lab50-50'" :classlists="classlists"></LecLab5050>
     <LecLab6040 v-show="selectedTab === 'Lec-Lab60-40'"></LecLab6040>
-    <!-- <Transmutation @insert-student-score="HPS"></Transmutation> -->
+    <!-- {{$route.params.placeName}} -->
   </div>
 </template>
 
@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       tabs: ["Lec", "Lab", "Lec-Lab40-60", "Lec-Lab50-50", "Lec-Lab60-40"],
-      selectedTab: "Lec",
+      selectedTab: "Lab",
       classlists: [],
       gender: "female",
       labScore: []
@@ -39,7 +39,7 @@ export default {
     displayClasslists() {
       this.$Progress.start();
       axios
-        .get("api/classlists")
+        .get("/api/classlists/" + this.$route.params.placeName)
         .then(({ data }) => this.$Progress.finish((this.classlists = data)));
     }
   },

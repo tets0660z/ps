@@ -18,6 +18,8 @@ class ImportedClasslistsController extends Controller
         return DB::table('imported_classlists')
         ->select(['sections','student','gender','course','id'])
         ->distinct('sections')->get();
+        // return ImportedClasslist::all();
+      
     }
 
     /**
@@ -37,9 +39,11 @@ class ImportedClasslistsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($section)
     {
-        //
+        return  DB::table('imported_classlists')
+        ->where('sections' ,$section)->get();
+    //  dd($section);
     }
 
     /**

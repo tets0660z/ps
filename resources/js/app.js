@@ -38,12 +38,13 @@ const options = {
 //   vue router
 const routes = [
     {
-        path: "/subject",
-        component: require("./components/Subjects.vue").default
+        path: "/classlists",
+        component: require("./components/Classlists.vue").default
     },
 
     {
-        path: "/classrecord",
+        path: "/classrecord/:placeName",
+        name: "classrecord",
         component: require("./components/ClassRecord.vue").default
     }
 ];

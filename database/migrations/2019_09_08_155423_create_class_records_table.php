@@ -15,8 +15,8 @@ class CreateClassRecordsTable extends Migration
     {
         Schema::create('class_records', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->String('titles');
-            $table->date('date');
+            $table->string('titles');
+            $table->date('date')->nullable();;
             $table->integer('lec_quiz')->nullable();
             $table->integer('lec_student_quiz')->nullable();
             $table->integer('lec_ot')->nullable();
@@ -26,14 +26,16 @@ class CreateClassRecordsTable extends Migration
             $table->integer('student_exam')->nullable();
             $table->integer('lab_student_score')->nullable();
             $table->integer('lab_score')->nullable();
+            $table->integer('grid_row')->nullable();
+            $table->integer('grid_col')->nullable();
            
-            $table->unsignedBigInteger('user_id')->index();
+            $table->unsignedBigInteger('user_id')->index()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
-            $table->unsignedBigInteger('imported_classlists_id')->index();
+            $table->unsignedBigInteger('imported_classlists_id')->index()->nullable();
             $table->foreign('imported_classlists_id')->references('id')->on('imported_classlists')->onDelete('cascade');
 
-            $table->unsignedBigInteger('subjects_id')->index();
+            $table->unsignedBigInteger('subjects_id')->index()->nullable();
             $table->foreign('subjects_id')->references('id')->on('subjects')->onDelete('cascade');
 
             $table->timestamps();

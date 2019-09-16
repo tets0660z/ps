@@ -11,6 +11,6 @@ class ImportedClasslistsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\ImportedClasslist::class,17)->create();
+        factory(App\ImportedClasslist::class,4)->create();
     }
 }
