@@ -18,8 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+Route::apiResource('records', 'API\ClassRecordsController');
 Route::apiResource('subjects', 'API\SubjectsController');
 Route::apiResource('classlists', 'API\ImportedClasslistsController');
-// Route::apiResource('lecture', 'API\LecturesController');
 Route::apiResource('laboratory', 'API\LaboratoriesController');

@@ -10,14 +10,11 @@
       >{{ tab }}</span>
     </div>
     <lec v-show="selectedTab === 'Lec'" :classlists="classlists"></lec>
-    <lab
-      v-show="selectedTab === 'Lab'"
-      :classlists="classlists"
-      @insert-student-score="studentScore"
-    ></lab>
+    <lab v-show="selectedTab === 'Lab'" :classlists="classlists"></lab>
     <LecLab4060 v-show="selectedTab === 'Lec-Lab40-60'" :classlists="classlists"></LecLab4060>
     <LecLab5050 v-show="selectedTab === 'Lec-Lab50-50'" :classlists="classlists"></LecLab5050>
     <LecLab6040 v-show="selectedTab === 'Lec-Lab60-40'"></LecLab6040>
+    <!-- <Transmutation @insert-student-score="HPS"></Transmutation> -->
   </div>
 </template>
 
@@ -44,9 +41,6 @@ export default {
       axios
         .get("api/classlists")
         .then(({ data }) => this.$Progress.finish((this.classlists = data)));
-    },
-    studentScore: function(value) {
-      this.labScore = value;
     }
   },
   created() {

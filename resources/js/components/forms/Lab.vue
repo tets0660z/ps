@@ -1,71 +1,137 @@
 <template>
   <div>
     <div class="mb-2">
-      <input type="text" placeholder="Search" />
+      <button type="button" @click="addScore">FG(+)</button>
+      <button type="button" @click="addScore">M(+)</button>
+      <button type="button" @click="addScore">F(+)</button>
+      <!-- <input type="text" placeholder="Search" /> -->
     </div>
-    <form @submit.prevent="insertLaboratory">
+    <form @submit.prevent="insertScore" method="POST">
       <table border="1" class="table-hover">
-        <thead></thead>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>ID Number</th>
+            <th>Name</th>
+            <th>Course</th>
+            <th v-for="(title,index) in form.titles" :key="index">
+              <input v-model="title.value" class="quiz d-flex" name="title" />
+            </th>
+            <th>Total</th>
+            <th>1st Grading</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr v-for="(classlist,index) in classlists" :key="'lab'+ classlist.id">
+          <tr>
+            <th colspan="4" class="text-center bg-primary">Male</th>
+            <td v-for="(overAllScore,index) in form.overAllScores" :key="index">
+              <input v-model="overAllScore.value" class="quiz d-flex" name="over_all_score" />
+            </td>
+            <th>{{overAllScores}}</th>
+            <td></td>
+          </tr>
+
+          <!-- ./ first row  -->
+
+          <tr
+            v-for="(classlist,index) in classlists"
+            :key="'labm'+ classlist.id"
+            v-show="classlist.gender ==='male'"
+          >
             <td>{{index +1}}</td>
-            <td>
-              <span>{{classlist.student}}</span>
-            </td>
-            <button type="button" @click="addScore(index)">score(+)</button>
-
+            <td></td>
+            <td>{{classlist.student}}</td>
+            <td>{{classlist.course}}</td>
             <td v-for="(labStudentScore,i) in form.labStudentScores" :key="i">
-              <input
-                v-model="labStudentScore.value[index]"
-                @mouseover="col"
-                v-on:keyup="emitToClassrecord"
-              />
+              <input v-model="labStudentScore.value[index]" name="student_scores" />
             </td>
 
-            <td>{{studentTotalScores}}</td>
+            <td>{{studentTotalScores[index]}}</td>
           </tr>
           <!-- ./MALE -->
+          <tr>
+            <th colspan="4" class="text-center bg-primary">Female</th>
+            <td v-for="(overAllScore,index) in form.overAllScores" :key="index">
+              <input v-model="overAllScore.value" class="quiz d-flex" name="over_all_scores" />
+            </td>
+            <th>{{overAllScores}}</th>
+            <td></td>
+          </tr>
+
+          <!-- ./ first row  -->
+
+          <tr
+            v-for="(classlist,index) in classlists"
+            :key="'labf'+ classlist.id"
+            v-show="classlist.gender ==='female'"
+          >
+            <td>{{index +1}}</td>
+            <td></td>
+            <td>{{classlist.student}}</td>
+            <td>{{classlist.course}}</td>
+            <td v-for="(labStudentScore,i) in form.labStudentScores" :key="i">
+              <input v-model="labStudentScore.value[index]" />
+            </td>
+
+            <td>{{studentTotalScores[index]}}</td>
+          </tr>
+          <!-- ./FEMALE -->
         </tbody>
       </table>
+      <button type="submit">save</button>
+      <Transmutation :HPS="overAllScores"></Transmutation>
     </form>
   </div>
 </template>
 
 <script>
+import Transmutation from "./Transmutation";
 export default {
   props: ["classlists"],
+  components: {
+    Transmutation
+  },
   data() {
     return {
       form: new Form({
         labStudentScores: [],
-        studentExam: 0
-      })
+        studentExam: 0,
+        titles: [],
+        overAllScores: []
+      }),
+      count: 4
     };
   },
 
-  methods: {
-    // referenced to classrecord.
-    emitToClassrecord(value) {
-      this.$emit("insert-student-score", this.form.labStudentScores);
-      // alert("asd");
-    },
-    addScore: function(index) {
-      this.form.labStudentScores.push({ value: [] });
-    },
-    col: function(e) {
-      let x = e.target.selectedIndex;
-      console.log(x);
-    }
-  },
   computed: {
     studentTotalScores: function() {
-      return this.form.labStudentScores.reduce(
-        (acc, item) => acc + parseInt(item.value),
+      return this.classlists.map((c, index) => {
+        return this.form.labStudentScores.reduce((acc, item) => {
+          const value = parseInt(item.value[index], 10) || 0;
+          return acc + value;
+        }, 0);
+      });
+    },
+    overAllScores: function() {
+      return this.form.overAllScores.reduce(
+        (acc, item) => acc + parseInt(item.value, 10) || 0,
         0
       );
     },
+
     studentTotal: function() {
       return parseInt(this.form.studentExam) + this.studentTotalScores;
+    }
+  },
+  methods: {
+    insertScore() {
+      this.form.post("/api/records/");
+    },
+    transScore(value) {},
+    addScore: function() {
+      this.form.labStudentScores.push({ value: [] });
+      this.form.titles.push({ value: "" });
+      this.form.overAllScores.push({ value: [] });
     }
   }
 };
@@ -78,7 +144,7 @@ export default {
   font-family: "Times New Roman";
 }
 
-.quiz {
+input {
   width: 30px;
 }
 /* input[type="date"] {

@@ -1863,9 +1863,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 
@@ -1890,9 +1887,6 @@ __webpack_require__.r(__webpack_exports__);
         var data = _ref.data;
         return _this.$Progress.finish(_this.classlists = data);
       });
-    },
-    studentScore: function studentScore(value) {
-      this.labScore = value;
     }
   },
   created: function created() {
@@ -2024,6 +2018,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Transmutation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Transmutation */ "./resources/js/components/forms/Transmutation.vue");
 //
 //
 //
@@ -2057,39 +2052,111 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["classlists"],
+  components: {
+    Transmutation: _Transmutation__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
       form: new Form({
         labStudentScores: [],
-        studentExam: 0
-      })
+        studentExam: 0,
+        titles: [],
+        overAllScores: []
+      }),
+      count: 4
     };
-  },
-  methods: {
-    // referenced to classrecord.
-    emitToClassrecord: function emitToClassrecord(value) {
-      this.$emit("insert-student-score", this.form.labStudentScores); // alert("asd");
-    },
-    addScore: function addScore(index) {
-      this.form.labStudentScores.push({
-        value: []
-      });
-    },
-    col: function col(e) {
-      var x = e.target.selectedIndex;
-      console.log(x);
-    }
   },
   computed: {
     studentTotalScores: function studentTotalScores() {
-      return this.form.labStudentScores.reduce(function (acc, item) {
-        return acc + parseInt(item.value);
+      var _this = this;
+
+      return this.classlists.map(function (c, index) {
+        return _this.form.labStudentScores.reduce(function (acc, item) {
+          var value = parseInt(item.value[index], 10) || 0;
+          return acc + value;
+        }, 0);
+      });
+    },
+    overAllScores: function overAllScores() {
+      return this.form.overAllScores.reduce(function (acc, item) {
+        return acc + parseInt(item.value, 10) || 0;
       }, 0);
     },
     studentTotal: function studentTotal() {
       return parseInt(this.form.studentExam) + this.studentTotalScores;
+    }
+  },
+  methods: {
+    insertScore: function insertScore() {
+      this.form.post("/api/records/");
+    },
+    transScore: function transScore(value) {},
+    addScore: function addScore() {
+      this.form.labStudentScores.push({
+        value: []
+      });
+      this.form.titles.push({
+        value: ""
+      });
+      this.form.overAllScores.push({
+        value: []
+      });
     }
   }
 });
@@ -2251,6 +2318,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Transmutation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Transmutation */ "./resources/js/components/forms/Transmutation.vue");
 //
 //
 //
@@ -2258,9 +2326,115 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["classlists"],
-  name: "LecLab4060"
+  components: {
+    Transmutation: _Transmutation__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      form: new Form({
+        labStudentScores: [],
+        studentExam: 0,
+        titles: [],
+        overAllScores: []
+      }),
+      returnGrade: ""
+    };
+  },
+  methods: {
+    // referenced to classrecord.
+    newGrade: function newGrade(value) {
+      this.returnGrade = value;
+    },
+    transScore: function transScore(value) {
+      this.returnGrade = value;
+    },
+    addScore: function addScore() {
+      this.form.labStudentScores.push({
+        value: []
+      });
+      this.form.titles.push({
+        value: []
+      });
+      this.form.overAllScores.push({
+        value: []
+      });
+    }
+  },
+  computed: {
+    studentTotalScores: function studentTotalScores() {
+      var _this = this;
+
+      return this.classlists.map(function (c, index) {
+        return _this.form.labStudentScores.reduce(function (acc, item) {
+          var value = parseInt(item.value[index], 10) || 0;
+          return acc + value;
+        }, 0);
+      });
+    },
+    overAllScores: function overAllScores() {
+      return this.form.overAllScores.reduce(function (acc, item) {
+        return acc + parseInt(item.value, 10) || 0;
+      }, 0);
+    },
+    studentTotal: function studentTotal() {
+      return parseInt(this.form.studentExam) + this.studentTotalScores;
+    }
+  }
 });
 
 /***/ }),
@@ -2274,66 +2448,147 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+/* harmony import */ var _Transmutation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Transmutation */ "./resources/js/components/forms/Transmutation.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["classlists"],
-  name: "LecLab5050",
-  created: function created() {
-    this.initColHead();
-    this.createSpreadSheet();
+  components: {
+    Transmutation: _Transmutation__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     return {
-      selected: "",
-      grid: [],
-      colHead: [" "],
-      isSelected: false
+      form: new Form({
+        labStudentScores: [],
+        studentExam: 0,
+        titles: [],
+        overAllScores: []
+      }),
+      returnGrade: ""
     };
   },
   methods: {
-    initColHead: function initColHead() {
-      var _this$colHead;
+    // referenced to classrecord.
+    newGrade: function newGrade(value) {
+      this.returnGrade = value;
+    },
+    transScore: function transScore(value) {
+      this.returnGrade = value;
+    },
+    addScore: function addScore() {
+      this.form.labStudentScores.push({
+        value: []
+      });
+      this.form.titles.push({
+        value: []
+      });
+      this.form.overAllScores.push({
+        value: []
+      });
+    }
+  },
+  computed: {
+    studentTotalScores: function studentTotalScores() {
+      var _this = this;
 
-      (_this$colHead = this.colHead).push.apply(_this$colHead, _toConsumableArray("sample".split("")));
+      return this.classlists.map(function (c, index) {
+        return _this.form.labStudentScores.reduce(function (acc, item) {
+          var value = parseInt(item.value[index], 10) || 0;
+          return acc + value;
+        }, 0);
+      });
     },
-    createSpreadSheet: function createSpreadSheet() {
-      // row
-      for (var i = 0; i <= 4; i++) {
-        this.grid[i] = []; // col
-
-        for (var j = 0; j <= 20; j++) {
-          this.grid[i][j] = false;
-        }
-      }
+    overAllScores: function overAllScores() {
+      return this.form.overAllScores.reduce(function (acc, item) {
+        return acc + parseInt(item.value, 10) || 0;
+      }, 0);
     },
-    selectCell: function selectCell(row, col) {
-      var newRow = this.grid[row].slice(0);
-      newRow[col] = true;
-      this.$set(this.grid, row, newRow);
-    },
-    cellSelected: function cellSelected(row, col) {
-      return this.grid[row][col] === true;
+    studentTotal: function studentTotal() {
+      return parseInt(this.form.studentExam) + this.studentTotalScores;
     }
   }
 });
@@ -2349,12 +2604,200 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Transmutation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Transmutation */ "./resources/js/components/forms/Transmutation.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["classlists"],
+  components: {
+    Transmutation: _Transmutation__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      form: new Form({
+        labStudentScores: [],
+        studentExam: 0,
+        titles: [],
+        overAllScores: []
+      }),
+      returnGrade: ""
+    };
+  },
+  methods: {
+    // referenced to classrecord.
+    newGrade: function newGrade(value) {
+      this.returnGrade = value;
+    },
+    transScore: function transScore(value) {
+      this.returnGrade = value;
+    },
+    addScore: function addScore() {
+      this.form.labStudentScores.push({
+        value: []
+      });
+      this.form.titles.push({
+        value: []
+      });
+      this.form.overAllScores.push({
+        value: []
+      });
+    }
+  },
+  computed: {
+    studentTotalScores: function studentTotalScores() {
+      var _this = this;
+
+      return this.classlists.map(function (c, index) {
+        return _this.form.labStudentScores.reduce(function (acc, item) {
+          var value = parseInt(item.value[index], 10) || 0;
+          return acc + value;
+        }, 0);
+      });
+    },
+    overAllScores: function overAllScores() {
+      return this.form.overAllScores.reduce(function (acc, item) {
+        return acc + parseInt(item.value, 10) || 0;
+      }, 0);
+    },
+    studentTotal: function studentTotal() {
+      return parseInt(this.form.studentExam) + this.studentTotalScores;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/Transmutation.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/forms/Transmutation.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
 //
 //
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "LecLab6040"
+  name: "Transmutation",
+  props: ["HPS"],
+  data: function data() {
+    return {
+      grade: ""
+    };
+  },
+  computed: {
+    LPS: function LPS() {
+      return Math.round(0.7 * parseInt(this.HPS));
+    },
+    HINT: function HINT() {
+      return (parseInt(this.HPS) - this.LPS) / 25;
+    },
+    LINT: function LINT() {
+      return (parseInt(this.HPS) - (this.HPS - this.LPS)) / 10;
+    },
+    Grade: function Grade() {
+      if (this.HPS && this.HPS - this.HINT) {
+        return this.grade = 99;
+      }
+    }
+  },
+  methods: {
+    emitToLab: function emitToLab(value) {
+      this.$emit("insert-score", this.Grade);
+    }
+  }
 });
 
 /***/ }),
@@ -6835,7 +7278,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.legend[data-v-8c15615c] {\r\n  border: 0;\r\n  background-color: transparent;\r\n  font-family: \"Times New Roman\";\n}\n.quiz[data-v-8c15615c] {\r\n  width: 30px;\n}\r\n/* input[type=\"date\"] {\r\n  transform: rotate(-90deg);\r\n} */\n.btn-primary[data-v-8c15615c] {\r\n  width: 50px;\r\n  height: 50px;\r\n  padding: 10px;\n}\r\n", ""]);
+exports.push([module.i, "\n.legend[data-v-8c15615c] {\r\n  border: 0;\r\n  background-color: transparent;\r\n  font-family: \"Times New Roman\";\n}\ninput[data-v-8c15615c] {\r\n  width: 30px;\n}\r\n/* input[type=\"date\"] {\r\n  transform: rotate(-90deg);\r\n} */\n.btn-primary[data-v-8c15615c] {\r\n  width: 50px;\r\n  height: 50px;\r\n  padding: 10px;\n}\r\n", ""]);
 
 // exports
 
@@ -6855,6 +7298,63 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 // module
 exports.push([module.i, "\n.legend[data-v-7e526d62] {\r\n  border: 0;\r\n  background-color: transparent;\r\n  font-family: \"Times New Roman\";\n}\n.quiz[data-v-7e526d62] {\r\n  width: 30px;\n}\r\n/* input[type=\"date\"] {\r\n  transform: rotate(-90deg);\r\n} */\n.btn-primary[data-v-7e526d62] {\r\n  width: 50px;\r\n  height: 50px;\r\n  padding: 10px;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab4060.vue?vue&type=style&index=0&id=6cc6afa4&scoped=true&lang=css&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/forms/LecLab4060.vue?vue&type=style&index=0&id=6cc6afa4&scoped=true&lang=css& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.legend[data-v-6cc6afa4] {\r\n  border: 0;\r\n  background-color: transparent;\r\n  font-family: \"Times New Roman\";\n}\ninput[data-v-6cc6afa4] {\r\n  width: 30px;\n}\r\n/* input[type=\"date\"] {\r\n  transform: rotate(-90deg);\r\n} */\n.btn-primary[data-v-6cc6afa4] {\r\n  width: 50px;\r\n  height: 50px;\r\n  padding: 10px;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab5050.vue?vue&type=style&index=0&id=5a19f838&scoped=true&lang=css&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/forms/LecLab5050.vue?vue&type=style&index=0&id=5a19f838&scoped=true&lang=css& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.legend[data-v-5a19f838] {\r\n  border: 0;\r\n  background-color: transparent;\r\n  font-family: \"Times New Roman\";\n}\ninput[data-v-5a19f838] {\r\n  width: 30px;\n}\r\n/* input[type=\"date\"] {\r\n  transform: rotate(-90deg);\r\n} */\n.btn-primary[data-v-5a19f838] {\r\n  width: 50px;\r\n  height: 50px;\r\n  padding: 10px;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab6040.vue?vue&type=style&index=0&id=391f5824&scoped=true&lang=css&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/forms/LecLab6040.vue?vue&type=style&index=0&id=391f5824&scoped=true&lang=css& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.legend[data-v-391f5824] {\r\n  border: 0;\r\n  background-color: transparent;\r\n  font-family: \"Times New Roman\";\n}\ninput[data-v-391f5824] {\r\n  width: 30px;\n}\r\n/* input[type=\"date\"] {\r\n  transform: rotate(-90deg);\r\n} */\n.btn-primary[data-v-391f5824] {\r\n  width: 50px;\r\n  height: 50px;\r\n  padding: 10px;\n}\r\n", ""]);
 
 // exports
 
@@ -37797,6 +38297,96 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab4060.vue?vue&type=style&index=0&id=6cc6afa4&scoped=true&lang=css&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/forms/LecLab4060.vue?vue&type=style&index=0&id=6cc6afa4&scoped=true&lang=css& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./LecLab4060.vue?vue&type=style&index=0&id=6cc6afa4&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab4060.vue?vue&type=style&index=0&id=6cc6afa4&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab5050.vue?vue&type=style&index=0&id=5a19f838&scoped=true&lang=css&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/forms/LecLab5050.vue?vue&type=style&index=0&id=5a19f838&scoped=true&lang=css& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./LecLab5050.vue?vue&type=style&index=0&id=5a19f838&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab5050.vue?vue&type=style&index=0&id=5a19f838&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab6040.vue?vue&type=style&index=0&id=391f5824&scoped=true&lang=css&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/forms/LecLab6040.vue?vue&type=style&index=0&id=391f5824&scoped=true&lang=css& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./LecLab6040.vue?vue&type=style&index=0&id=391f5824&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab6040.vue?vue&type=style&index=0&id=391f5824&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/lib/addStyles.js":
 /*!****************************************************!*\
   !*** ./node_modules/style-loader/lib/addStyles.js ***!
@@ -43869,8 +44459,7 @@ var render = function() {
             expression: "selectedTab === 'Lab'"
           }
         ],
-        attrs: { classlists: _vm.classlists },
-        on: { "insert-student-score": _vm.studentScore }
+        attrs: { classlists: _vm.classlists }
       }),
       _vm._v(" "),
       _c("LecLab4060", {
@@ -44068,101 +44657,306 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._m(0),
+    _c("div", { staticClass: "mb-2" }, [
+      _c("button", { attrs: { type: "button" }, on: { click: _vm.addScore } }, [
+        _vm._v("FG(+)")
+      ]),
+      _vm._v(" "),
+      _c("button", { attrs: { type: "button" }, on: { click: _vm.addScore } }, [
+        _vm._v("M(+)")
+      ]),
+      _vm._v(" "),
+      _c("button", { attrs: { type: "button" }, on: { click: _vm.addScore } }, [
+        _vm._v("F(+)")
+      ])
+    ]),
     _vm._v(" "),
     _c(
       "form",
       {
+        attrs: { method: "POST" },
         on: {
           submit: function($event) {
             $event.preventDefault()
-            return _vm.insertLaboratory($event)
+            return _vm.insertScore($event)
           }
         }
       },
       [
         _c("table", { staticClass: "table-hover", attrs: { border: "1" } }, [
-          _c("thead"),
+          _c("thead", [
+            _c(
+              "tr",
+              [
+                _c("th", [_vm._v("#")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("ID Number")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Name")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Course")]),
+                _vm._v(" "),
+                _vm._l(_vm.form.titles, function(title, index) {
+                  return _c("th", { key: index }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: title.value,
+                          expression: "title.value"
+                        }
+                      ],
+                      staticClass: "quiz d-flex",
+                      attrs: { name: "title" },
+                      domProps: { value: title.value },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(title, "value", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                }),
+                _vm._v(" "),
+                _c("th", [_vm._v("Total")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("1st Grading")])
+              ],
+              2
+            )
+          ]),
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(_vm.classlists, function(classlist, index) {
-              return _c(
+            [
+              _c(
                 "tr",
-                { key: "lab" + classlist.id },
                 [
-                  _c("td", [_vm._v(_vm._s(index + 1))]),
-                  _vm._v(" "),
-                  _c("td", [_c("span", [_vm._v(_vm._s(classlist.student))])]),
-                  _vm._v(" "),
                   _c(
-                    "button",
+                    "th",
                     {
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.addScore(index)
-                        }
-                      }
+                      staticClass: "text-center bg-primary",
+                      attrs: { colspan: "4" }
                     },
-                    [_vm._v("score(+)")]
+                    [_vm._v("Male")]
                   ),
                   _vm._v(" "),
-                  _vm._l(_vm.form.labStudentScores, function(
-                    labStudentScore,
-                    i
-                  ) {
-                    return _c("td", { key: i }, [
+                  _vm._l(_vm.form.overAllScores, function(overAllScore, index) {
+                    return _c("td", { key: index }, [
                       _c("input", {
                         directives: [
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: labStudentScore.value[index],
-                            expression: "labStudentScore.value[index]"
+                            value: overAllScore.value,
+                            expression: "overAllScore.value"
                           }
                         ],
-                        domProps: { value: labStudentScore.value[index] },
+                        staticClass: "quiz d-flex",
+                        attrs: { name: "over_all_score" },
+                        domProps: { value: overAllScore.value },
                         on: {
-                          mouseover: _vm.col,
-                          keyup: _vm.emitToClassrecord,
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(
-                              labStudentScore.value,
-                              index,
-                              $event.target.value
-                            )
+                            _vm.$set(overAllScore, "value", $event.target.value)
                           }
                         }
                       })
                     ])
                   }),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(_vm.studentTotalScores))])
+                  _c("th", [_vm._v(_vm._s(_vm.overAllScores))]),
+                  _vm._v(" "),
+                  _c("td")
                 ],
                 2
-              )
-            }),
-            0
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.classlists, function(classlist, index) {
+                return _c(
+                  "tr",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: classlist.gender === "male",
+                        expression: "classlist.gender ==='male'"
+                      }
+                    ],
+                    key: "labm" + classlist.id
+                  },
+                  [
+                    _c("td", [_vm._v(_vm._s(index + 1))]),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(classlist.student))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(classlist.course))]),
+                    _vm._v(" "),
+                    _vm._l(_vm.form.labStudentScores, function(
+                      labStudentScore,
+                      i
+                    ) {
+                      return _c("td", { key: i }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: labStudentScore.value[index],
+                              expression: "labStudentScore.value[index]"
+                            }
+                          ],
+                          attrs: { name: "student_scores" },
+                          domProps: { value: labStudentScore.value[index] },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                labStudentScore.value,
+                                index,
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(_vm.studentTotalScores[index]))])
+                  ],
+                  2
+                )
+              }),
+              _vm._v(" "),
+              _c(
+                "tr",
+                [
+                  _c(
+                    "th",
+                    {
+                      staticClass: "text-center bg-primary",
+                      attrs: { colspan: "4" }
+                    },
+                    [_vm._v("Female")]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.form.overAllScores, function(overAllScore, index) {
+                    return _c("td", { key: index }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: overAllScore.value,
+                            expression: "overAllScore.value"
+                          }
+                        ],
+                        staticClass: "quiz d-flex",
+                        attrs: { name: "over_all_scores" },
+                        domProps: { value: overAllScore.value },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(overAllScore, "value", $event.target.value)
+                          }
+                        }
+                      })
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(_vm._s(_vm.overAllScores))]),
+                  _vm._v(" "),
+                  _c("td")
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.classlists, function(classlist, index) {
+                return _c(
+                  "tr",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: classlist.gender === "female",
+                        expression: "classlist.gender ==='female'"
+                      }
+                    ],
+                    key: "labf" + classlist.id
+                  },
+                  [
+                    _c("td", [_vm._v(_vm._s(index + 1))]),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(classlist.student))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(classlist.course))]),
+                    _vm._v(" "),
+                    _vm._l(_vm.form.labStudentScores, function(
+                      labStudentScore,
+                      i
+                    ) {
+                      return _c("td", { key: i }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: labStudentScore.value[index],
+                              expression: "labStudentScore.value[index]"
+                            }
+                          ],
+                          domProps: { value: labStudentScore.value[index] },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                labStudentScore.value,
+                                index,
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(_vm.studentTotalScores[index]))])
+                  ],
+                  2
+                )
+              })
+            ],
+            2
           )
-        ])
-      ]
+        ]),
+        _vm._v(" "),
+        _c("button", { attrs: { type: "submit" } }, [_vm._v("save")]),
+        _vm._v(" "),
+        _c("Transmutation", { attrs: { HPS: _vm.overAllScores } })
+      ],
+      1
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mb-2" }, [
-      _c("input", { attrs: { type: "text", placeholder: "Search" } })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -44502,10 +45296,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab4060.vue?vue&type=template&id=6cc6afa4&":
-/*!*******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/forms/LecLab4060.vue?vue&type=template&id=6cc6afa4& ***!
-  \*******************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab4060.vue?vue&type=template&id=6cc6afa4&scoped=true&":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/forms/LecLab4060.vue?vue&type=template&id=6cc6afa4&scoped=true& ***!
+  \*******************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -44518,9 +45312,194 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h1", [_vm._v("LecLab4060")]),
+    _c("div", { staticClass: "mb-2" }, [
+      _c("button", { attrs: { type: "button" }, on: { click: _vm.addScore } }, [
+        _vm._v("FG(+)")
+      ]),
+      _vm._v(" "),
+      _c("button", { attrs: { type: "button" }, on: { click: _vm.addScore } }, [
+        _vm._v("M(+)")
+      ]),
+      _vm._v(" "),
+      _c("button", { attrs: { type: "button" }, on: { click: _vm.addScore } }, [
+        _vm._v("F(+)")
+      ])
+    ]),
     _vm._v(" "),
-    _c("p", [_vm._v(_vm._s(_vm.classlists))])
+    _c(
+      "form",
+      {
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.insertLaboratory($event)
+          }
+        }
+      },
+      [
+        _c("table", { staticClass: "table-hover", attrs: { border: "1" } }, [
+          _c("thead", [
+            _c(
+              "tr",
+              [
+                _c("th", [_vm._v("#")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("ID Number")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Name")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Course")]),
+                _vm._v(" "),
+                _vm._l(_vm.form.titles, function(title, index) {
+                  return _c("th", { key: index }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: title.value,
+                          expression: "title.value"
+                        }
+                      ],
+                      staticClass: "quiz d-flex",
+                      domProps: { value: title.value },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(title, "value", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                }),
+                _vm._v(" "),
+                _c("th", [_vm._v("Total")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("1st Grading")])
+              ],
+              2
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            [
+              _c(
+                "tr",
+                [
+                  _c(
+                    "th",
+                    {
+                      staticClass: "text-center bg-primary",
+                      attrs: { colspan: "4" }
+                    },
+                    [_vm._v("Male")]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.form.overAllScores, function(overAllScore, index) {
+                    return _c("td", { key: index }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: overAllScore.value,
+                            expression: "overAllScore.value"
+                          }
+                        ],
+                        staticClass: "quiz d-flex",
+                        domProps: { value: overAllScore.value },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(overAllScore, "value", $event.target.value)
+                          }
+                        }
+                      })
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(_vm._s(_vm.overAllScores))]),
+                  _vm._v(" "),
+                  _c("td", {
+                    domProps: { textContent: _vm._s(_vm.transScore) }
+                  })
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.classlists, function(classlist, index) {
+                return _c(
+                  "tr",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: classlist.gender === "male",
+                        expression: "classlist.gender ==='male'"
+                      }
+                    ],
+                    key: "labm" + classlist.id
+                  },
+                  [
+                    _c("td", [_vm._v(_vm._s(index + 1))]),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(classlist.student))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(classlist.course))]),
+                    _vm._v(" "),
+                    _vm._l(_vm.form.labStudentScores, function(
+                      labStudentScore,
+                      i
+                    ) {
+                      return _c("td", { key: i }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: labStudentScore.value[index],
+                              expression: "labStudentScore.value[index]"
+                            }
+                          ],
+                          domProps: { value: labStudentScore.value[index] },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                labStudentScore.value,
+                                index,
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(_vm.studentTotalScores[index]))])
+                  ],
+                  2
+                )
+              })
+            ],
+            2
+          )
+        ]),
+        _vm._v(" "),
+        _c("Transmutation", { attrs: { emitToLab: _vm.newGrade } })
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []
@@ -44530,10 +45509,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab5050.vue?vue&type=template&id=5a19f838&":
-/*!*******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/forms/LecLab5050.vue?vue&type=template&id=5a19f838& ***!
-  \*******************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab5050.vue?vue&type=template&id=5a19f838&scoped=true&":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/forms/LecLab5050.vue?vue&type=template&id=5a19f838&scoped=true& ***!
+  \*******************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -44545,38 +45524,301 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "table",
-    _vm._l(_vm.grid, function(row, rowKey) {
-      return _c(
-        "tr",
-        { key: rowKey },
-        [
-          _c("th", { staticClass: "row-col-label" }, [
-            _vm._v(_vm._s(rowKey + 1))
+  return _c("div", [
+    _c("div", { staticClass: "mb-2" }, [
+      _c("button", { attrs: { type: "button" }, on: { click: _vm.addScore } }, [
+        _vm._v("FG(+)")
+      ]),
+      _vm._v(" "),
+      _c("button", { attrs: { type: "button" }, on: { click: _vm.addScore } }, [
+        _vm._v("M(+)")
+      ]),
+      _vm._v(" "),
+      _c("button", { attrs: { type: "button" }, on: { click: _vm.addScore } }, [
+        _vm._v("F(+)")
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.insertLaboratory($event)
+          }
+        }
+      },
+      [
+        _c("table", { staticClass: "table-hover", attrs: { border: "1" } }, [
+          _c("thead", [
+            _c(
+              "tr",
+              [
+                _c("th", [_vm._v("#")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("ID Number")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Name")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Course")]),
+                _vm._v(" "),
+                _vm._l(_vm.form.titles, function(title, index) {
+                  return _c("th", { key: index }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: title.value,
+                          expression: "title.value"
+                        }
+                      ],
+                      staticClass: "quiz d-flex",
+                      domProps: { value: title.value },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(title, "value", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                }),
+                _vm._v(" "),
+                _c("th", [_vm._v("Total")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("1st Grading")])
+              ],
+              2
+            )
           ]),
           _vm._v(" "),
-          _vm._l(row, function(col, colKey) {
-            return _c(
-              "td",
-              {
-                key: colKey,
-                class: { selected: _vm.cellSelected(rowKey, colKey) },
-                on: {
-                  click: function($event) {
-                    return _vm.selectCell(rowKey, colKey)
-                  }
-                }
-              },
-              [_vm._v(_vm._s(col))]
-            )
-          })
-        ],
-        2
-      )
-    }),
-    0
-  )
+          _c(
+            "tbody",
+            [
+              _c(
+                "tr",
+                [
+                  _c(
+                    "th",
+                    {
+                      staticClass: "text-center bg-primary",
+                      attrs: { colspan: "4" }
+                    },
+                    [_vm._v("Male")]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.form.overAllScores, function(overAllScore, index) {
+                    return _c("td", { key: index }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: overAllScore.value,
+                            expression: "overAllScore.value"
+                          }
+                        ],
+                        staticClass: "quiz d-flex",
+                        domProps: { value: overAllScore.value },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(overAllScore, "value", $event.target.value)
+                          }
+                        }
+                      })
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(_vm._s(_vm.overAllScores))]),
+                  _vm._v(" "),
+                  _c("td", {
+                    domProps: { textContent: _vm._s(_vm.transScore) }
+                  })
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.classlists, function(classlist, index) {
+                return _c(
+                  "tr",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: classlist.gender === "male",
+                        expression: "classlist.gender ==='male'"
+                      }
+                    ],
+                    key: "labm" + classlist.id
+                  },
+                  [
+                    _c("td", [_vm._v(_vm._s(index + 1))]),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(classlist.student))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(classlist.course))]),
+                    _vm._v(" "),
+                    _vm._l(_vm.form.labStudentScores, function(
+                      labStudentScore,
+                      i
+                    ) {
+                      return _c("td", { key: i }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: labStudentScore.value[index],
+                              expression: "labStudentScore.value[index]"
+                            }
+                          ],
+                          domProps: { value: labStudentScore.value[index] },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                labStudentScore.value,
+                                index,
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(_vm.studentTotalScores[index]))])
+                  ],
+                  2
+                )
+              }),
+              _vm._v(" "),
+              _c(
+                "tr",
+                [
+                  _c(
+                    "th",
+                    {
+                      staticClass: "text-center bg-primary",
+                      attrs: { colspan: "4" }
+                    },
+                    [_vm._v("Female")]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.form.overAllScores, function(overAllScore, index) {
+                    return _c("td", { key: index }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: overAllScore.value,
+                            expression: "overAllScore.value"
+                          }
+                        ],
+                        staticClass: "quiz d-flex",
+                        domProps: { value: overAllScore.value },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(overAllScore, "value", $event.target.value)
+                          }
+                        }
+                      })
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(_vm._s(_vm.overAllScores))]),
+                  _vm._v(" "),
+                  _c("td")
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.classlists, function(classlist, index) {
+                return _c(
+                  "tr",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: classlist.gender === "female",
+                        expression: "classlist.gender ==='female'"
+                      }
+                    ],
+                    key: "labf" + classlist.id
+                  },
+                  [
+                    _c("td", [_vm._v(_vm._s(index + 1))]),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(classlist.student))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(classlist.course))]),
+                    _vm._v(" "),
+                    _vm._l(_vm.form.labStudentScores, function(
+                      labStudentScore,
+                      i
+                    ) {
+                      return _c("td", { key: i }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: labStudentScore.value[index],
+                              expression: "labStudentScore.value[index]"
+                            }
+                          ],
+                          domProps: { value: labStudentScore.value[index] },
+                          on: {
+                            keyup: _vm.emitToClassrecord,
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                labStudentScore.value,
+                                index,
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(_vm.studentTotalScores[index]))])
+                  ],
+                  2
+                )
+              })
+            ],
+            2
+          )
+        ]),
+        _vm._v(" "),
+        _c("Transmutation", { attrs: { emitToLab: _vm.newGrade } })
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -44585,10 +45827,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab6040.vue?vue&type=template&id=391f5824&":
-/*!*******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/forms/LecLab6040.vue?vue&type=template&id=391f5824& ***!
-  \*******************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab6040.vue?vue&type=template&id=391f5824&scoped=true&":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/forms/LecLab6040.vue?vue&type=template&id=391f5824&scoped=true& ***!
+  \*******************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -44600,7 +45842,333 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("h1", [_vm._v("LecLab6040")])
+  return _c("div", [
+    _c("div", { staticClass: "mb-2" }, [
+      _c("button", { attrs: { type: "button" }, on: { click: _vm.addScore } }, [
+        _vm._v("FG(+)")
+      ]),
+      _vm._v(" "),
+      _c("button", { attrs: { type: "button" }, on: { click: _vm.addScore } }, [
+        _vm._v("M(+)")
+      ]),
+      _vm._v(" "),
+      _c("button", { attrs: { type: "button" }, on: { click: _vm.addScore } }, [
+        _vm._v("F(+)")
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.insertLaboratory($event)
+          }
+        }
+      },
+      [
+        _c("table", { staticClass: "table-hover", attrs: { border: "1" } }, [
+          _c("thead", [
+            _c(
+              "tr",
+              [
+                _c("th", [_vm._v("#")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("ID Number")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Name")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Course")]),
+                _vm._v(" "),
+                _vm._l(_vm.form.titles, function(title, index) {
+                  return _c("th", { key: index }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: title.value,
+                          expression: "title.value"
+                        }
+                      ],
+                      staticClass: "quiz d-flex",
+                      domProps: { value: title.value },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(title, "value", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                }),
+                _vm._v(" "),
+                _c("th", [_vm._v("Total")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("1st Grading")])
+              ],
+              2
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            [
+              _c(
+                "tr",
+                [
+                  _c(
+                    "th",
+                    {
+                      staticClass: "text-center bg-primary",
+                      attrs: { colspan: "4" }
+                    },
+                    [_vm._v("Male")]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.form.overAllScores, function(overAllScore, index) {
+                    return _c("td", { key: index }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: overAllScore.value,
+                            expression: "overAllScore.value"
+                          }
+                        ],
+                        staticClass: "quiz d-flex",
+                        domProps: { value: overAllScore.value },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(overAllScore, "value", $event.target.value)
+                          }
+                        }
+                      })
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(_vm._s(_vm.overAllScores))]),
+                  _vm._v(" "),
+                  _c("td", {
+                    domProps: { textContent: _vm._s(_vm.transScore) }
+                  })
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.classlists, function(classlist, index) {
+                return _c(
+                  "tr",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: classlist.gender === "male",
+                        expression: "classlist.gender ==='male'"
+                      }
+                    ],
+                    key: "labm" + classlist.id
+                  },
+                  [
+                    _c("td", [_vm._v(_vm._s(index + 1))]),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(classlist.student))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(classlist.course))]),
+                    _vm._v(" "),
+                    _vm._l(_vm.form.labStudentScores, function(
+                      labStudentScore,
+                      i
+                    ) {
+                      return _c("td", { key: i }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: labStudentScore.value[index],
+                              expression: "labStudentScore.value[index]"
+                            }
+                          ],
+                          domProps: { value: labStudentScore.value[index] },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                labStudentScore.value,
+                                index,
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(_vm.studentTotalScores[index]))])
+                  ],
+                  2
+                )
+              }),
+              _vm._v(" "),
+              _c(
+                "tr",
+                [
+                  _c(
+                    "th",
+                    {
+                      staticClass: "text-center bg-primary",
+                      attrs: { colspan: "4" }
+                    },
+                    [_vm._v("Female")]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.form.overAllScores, function(overAllScore, index) {
+                    return _c("td", { key: index }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: overAllScore.value,
+                            expression: "overAllScore.value"
+                          }
+                        ],
+                        staticClass: "quiz d-flex",
+                        domProps: { value: overAllScore.value },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(overAllScore, "value", $event.target.value)
+                          }
+                        }
+                      })
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(_vm._s(_vm.overAllScores))]),
+                  _vm._v(" "),
+                  _c("td")
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.classlists, function(classlist, index) {
+                return _c(
+                  "tr",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: classlist.gender === "female",
+                        expression: "classlist.gender ==='female'"
+                      }
+                    ],
+                    key: "labf" + classlist.id
+                  },
+                  [
+                    _c("td", [_vm._v(_vm._s(index + 1))]),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(classlist.student))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(classlist.course))]),
+                    _vm._v(" "),
+                    _vm._l(_vm.form.labStudentScores, function(
+                      labStudentScore,
+                      i
+                    ) {
+                      return _c("td", { key: i }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: labStudentScore.value[index],
+                              expression: "labStudentScore.value[index]"
+                            }
+                          ],
+                          domProps: { value: labStudentScore.value[index] },
+                          on: {
+                            keyup: _vm.emitToClassrecord,
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                labStudentScore.value,
+                                index,
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(_vm.studentTotalScores[index]))])
+                  ],
+                  2
+                )
+              })
+            ],
+            2
+          )
+        ]),
+        _vm._v(" "),
+        _c("Transmutation", { attrs: { emitToLab: _vm.newGrade } })
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/Transmutation.vue?vue&type=template&id=1a2514d6&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/forms/Transmutation.vue?vue&type=template&id=1a2514d6& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", [_vm._v(_vm._s(_vm.HPS) + "- " + _vm._s(_vm.Grade))]),
+    _vm._v(" "),
+    _c("div", [_vm._v(_vm._s(_vm.LPS))]),
+    _vm._v(" "),
+    _c("div", [_vm._v(_vm._s(_vm.HINT))]),
+    _vm._v(" "),
+    _c("div", [_vm._v(_vm._s(_vm.LINT))])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -60271,9 +61839,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _LecLab4060_vue_vue_type_template_id_6cc6afa4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LecLab4060.vue?vue&type=template&id=6cc6afa4& */ "./resources/js/components/forms/LecLab4060.vue?vue&type=template&id=6cc6afa4&");
+/* harmony import */ var _LecLab4060_vue_vue_type_template_id_6cc6afa4_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LecLab4060.vue?vue&type=template&id=6cc6afa4&scoped=true& */ "./resources/js/components/forms/LecLab4060.vue?vue&type=template&id=6cc6afa4&scoped=true&");
 /* harmony import */ var _LecLab4060_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LecLab4060.vue?vue&type=script&lang=js& */ "./resources/js/components/forms/LecLab4060.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _LecLab4060_vue_vue_type_style_index_0_id_6cc6afa4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LecLab4060.vue?vue&type=style&index=0&id=6cc6afa4&scoped=true&lang=css& */ "./resources/js/components/forms/LecLab4060.vue?vue&type=style&index=0&id=6cc6afa4&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -60281,13 +61851,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _LecLab4060_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _LecLab4060_vue_vue_type_template_id_6cc6afa4___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _LecLab4060_vue_vue_type_template_id_6cc6afa4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _LecLab4060_vue_vue_type_template_id_6cc6afa4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _LecLab4060_vue_vue_type_template_id_6cc6afa4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  null,
+  "6cc6afa4",
   null
   
 )
@@ -60313,19 +61883,35 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/forms/LecLab4060.vue?vue&type=template&id=6cc6afa4&":
-/*!*************************************************************************************!*\
-  !*** ./resources/js/components/forms/LecLab4060.vue?vue&type=template&id=6cc6afa4& ***!
-  \*************************************************************************************/
+/***/ "./resources/js/components/forms/LecLab4060.vue?vue&type=style&index=0&id=6cc6afa4&scoped=true&lang=css&":
+/*!***************************************************************************************************************!*\
+  !*** ./resources/js/components/forms/LecLab4060.vue?vue&type=style&index=0&id=6cc6afa4&scoped=true&lang=css& ***!
+  \***************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab4060_vue_vue_type_style_index_0_id_6cc6afa4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./LecLab4060.vue?vue&type=style&index=0&id=6cc6afa4&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab4060.vue?vue&type=style&index=0&id=6cc6afa4&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab4060_vue_vue_type_style_index_0_id_6cc6afa4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab4060_vue_vue_type_style_index_0_id_6cc6afa4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab4060_vue_vue_type_style_index_0_id_6cc6afa4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab4060_vue_vue_type_style_index_0_id_6cc6afa4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab4060_vue_vue_type_style_index_0_id_6cc6afa4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/forms/LecLab4060.vue?vue&type=template&id=6cc6afa4&scoped=true&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/forms/LecLab4060.vue?vue&type=template&id=6cc6afa4&scoped=true& ***!
+  \*************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab4060_vue_vue_type_template_id_6cc6afa4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./LecLab4060.vue?vue&type=template&id=6cc6afa4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab4060.vue?vue&type=template&id=6cc6afa4&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab4060_vue_vue_type_template_id_6cc6afa4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab4060_vue_vue_type_template_id_6cc6afa4_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./LecLab4060.vue?vue&type=template&id=6cc6afa4&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab4060.vue?vue&type=template&id=6cc6afa4&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab4060_vue_vue_type_template_id_6cc6afa4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab4060_vue_vue_type_template_id_6cc6afa4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab4060_vue_vue_type_template_id_6cc6afa4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -60340,9 +61926,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _LecLab5050_vue_vue_type_template_id_5a19f838___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LecLab5050.vue?vue&type=template&id=5a19f838& */ "./resources/js/components/forms/LecLab5050.vue?vue&type=template&id=5a19f838&");
+/* harmony import */ var _LecLab5050_vue_vue_type_template_id_5a19f838_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LecLab5050.vue?vue&type=template&id=5a19f838&scoped=true& */ "./resources/js/components/forms/LecLab5050.vue?vue&type=template&id=5a19f838&scoped=true&");
 /* harmony import */ var _LecLab5050_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LecLab5050.vue?vue&type=script&lang=js& */ "./resources/js/components/forms/LecLab5050.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _LecLab5050_vue_vue_type_style_index_0_id_5a19f838_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LecLab5050.vue?vue&type=style&index=0&id=5a19f838&scoped=true&lang=css& */ "./resources/js/components/forms/LecLab5050.vue?vue&type=style&index=0&id=5a19f838&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -60350,13 +61938,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _LecLab5050_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _LecLab5050_vue_vue_type_template_id_5a19f838___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _LecLab5050_vue_vue_type_template_id_5a19f838___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _LecLab5050_vue_vue_type_template_id_5a19f838_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _LecLab5050_vue_vue_type_template_id_5a19f838_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  null,
+  "5a19f838",
   null
   
 )
@@ -60382,19 +61970,35 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/forms/LecLab5050.vue?vue&type=template&id=5a19f838&":
-/*!*************************************************************************************!*\
-  !*** ./resources/js/components/forms/LecLab5050.vue?vue&type=template&id=5a19f838& ***!
-  \*************************************************************************************/
+/***/ "./resources/js/components/forms/LecLab5050.vue?vue&type=style&index=0&id=5a19f838&scoped=true&lang=css&":
+/*!***************************************************************************************************************!*\
+  !*** ./resources/js/components/forms/LecLab5050.vue?vue&type=style&index=0&id=5a19f838&scoped=true&lang=css& ***!
+  \***************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab5050_vue_vue_type_style_index_0_id_5a19f838_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./LecLab5050.vue?vue&type=style&index=0&id=5a19f838&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab5050.vue?vue&type=style&index=0&id=5a19f838&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab5050_vue_vue_type_style_index_0_id_5a19f838_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab5050_vue_vue_type_style_index_0_id_5a19f838_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab5050_vue_vue_type_style_index_0_id_5a19f838_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab5050_vue_vue_type_style_index_0_id_5a19f838_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab5050_vue_vue_type_style_index_0_id_5a19f838_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/forms/LecLab5050.vue?vue&type=template&id=5a19f838&scoped=true&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/forms/LecLab5050.vue?vue&type=template&id=5a19f838&scoped=true& ***!
+  \*************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab5050_vue_vue_type_template_id_5a19f838___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./LecLab5050.vue?vue&type=template&id=5a19f838& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab5050.vue?vue&type=template&id=5a19f838&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab5050_vue_vue_type_template_id_5a19f838___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab5050_vue_vue_type_template_id_5a19f838_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./LecLab5050.vue?vue&type=template&id=5a19f838&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab5050.vue?vue&type=template&id=5a19f838&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab5050_vue_vue_type_template_id_5a19f838_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab5050_vue_vue_type_template_id_5a19f838___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab5050_vue_vue_type_template_id_5a19f838_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -60409,9 +62013,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _LecLab6040_vue_vue_type_template_id_391f5824___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LecLab6040.vue?vue&type=template&id=391f5824& */ "./resources/js/components/forms/LecLab6040.vue?vue&type=template&id=391f5824&");
+/* harmony import */ var _LecLab6040_vue_vue_type_template_id_391f5824_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LecLab6040.vue?vue&type=template&id=391f5824&scoped=true& */ "./resources/js/components/forms/LecLab6040.vue?vue&type=template&id=391f5824&scoped=true&");
 /* harmony import */ var _LecLab6040_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LecLab6040.vue?vue&type=script&lang=js& */ "./resources/js/components/forms/LecLab6040.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _LecLab6040_vue_vue_type_style_index_0_id_391f5824_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LecLab6040.vue?vue&type=style&index=0&id=391f5824&scoped=true&lang=css& */ "./resources/js/components/forms/LecLab6040.vue?vue&type=style&index=0&id=391f5824&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -60419,13 +62025,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _LecLab6040_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _LecLab6040_vue_vue_type_template_id_391f5824___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _LecLab6040_vue_vue_type_template_id_391f5824___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _LecLab6040_vue_vue_type_template_id_391f5824_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _LecLab6040_vue_vue_type_template_id_391f5824_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  null,
+  "391f5824",
   null
   
 )
@@ -60451,19 +62057,104 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/forms/LecLab6040.vue?vue&type=template&id=391f5824&":
-/*!*************************************************************************************!*\
-  !*** ./resources/js/components/forms/LecLab6040.vue?vue&type=template&id=391f5824& ***!
-  \*************************************************************************************/
+/***/ "./resources/js/components/forms/LecLab6040.vue?vue&type=style&index=0&id=391f5824&scoped=true&lang=css&":
+/*!***************************************************************************************************************!*\
+  !*** ./resources/js/components/forms/LecLab6040.vue?vue&type=style&index=0&id=391f5824&scoped=true&lang=css& ***!
+  \***************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab6040_vue_vue_type_style_index_0_id_391f5824_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./LecLab6040.vue?vue&type=style&index=0&id=391f5824&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab6040.vue?vue&type=style&index=0&id=391f5824&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab6040_vue_vue_type_style_index_0_id_391f5824_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab6040_vue_vue_type_style_index_0_id_391f5824_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab6040_vue_vue_type_style_index_0_id_391f5824_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab6040_vue_vue_type_style_index_0_id_391f5824_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab6040_vue_vue_type_style_index_0_id_391f5824_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/forms/LecLab6040.vue?vue&type=template&id=391f5824&scoped=true&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/forms/LecLab6040.vue?vue&type=template&id=391f5824&scoped=true& ***!
+  \*************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab6040_vue_vue_type_template_id_391f5824___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./LecLab6040.vue?vue&type=template&id=391f5824& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab6040.vue?vue&type=template&id=391f5824&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab6040_vue_vue_type_template_id_391f5824___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab6040_vue_vue_type_template_id_391f5824_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./LecLab6040.vue?vue&type=template&id=391f5824&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/LecLab6040.vue?vue&type=template&id=391f5824&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab6040_vue_vue_type_template_id_391f5824_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab6040_vue_vue_type_template_id_391f5824___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LecLab6040_vue_vue_type_template_id_391f5824_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/forms/Transmutation.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/forms/Transmutation.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Transmutation_vue_vue_type_template_id_1a2514d6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Transmutation.vue?vue&type=template&id=1a2514d6& */ "./resources/js/components/forms/Transmutation.vue?vue&type=template&id=1a2514d6&");
+/* harmony import */ var _Transmutation_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Transmutation.vue?vue&type=script&lang=js& */ "./resources/js/components/forms/Transmutation.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Transmutation_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Transmutation_vue_vue_type_template_id_1a2514d6___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Transmutation_vue_vue_type_template_id_1a2514d6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/forms/Transmutation.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/forms/Transmutation.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/forms/Transmutation.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Transmutation_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Transmutation.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/Transmutation.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Transmutation_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/forms/Transmutation.vue?vue&type=template&id=1a2514d6&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/forms/Transmutation.vue?vue&type=template&id=1a2514d6& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Transmutation_vue_vue_type_template_id_1a2514d6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Transmutation.vue?vue&type=template&id=1a2514d6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/Transmutation.vue?vue&type=template&id=1a2514d6&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Transmutation_vue_vue_type_template_id_1a2514d6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Transmutation_vue_vue_type_template_id_1a2514d6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

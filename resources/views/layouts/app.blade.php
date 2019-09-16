@@ -7,6 +7,7 @@
         @include('includes.content')
         <router-view></router-view>
         <vue-progress-bar></vue-progress-bar>
+        @csrf
     </div>
 </body>
 </html>
