@@ -29,8 +29,8 @@ export default {
   data() {
     return {
       tabs: ["Lec", "Lab", "Lec-Lab40-60", "Lec-Lab50-50", "Lec-Lab60-40"],
-      selectedTab: "Lab",
-      classlists: [],
+      selectedTab: "Lec",
+      classlists: "",
       gender: "female",
       labScore: []
     };

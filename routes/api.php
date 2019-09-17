@@ -19,11 +19,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('classrecords', 'API\ClassRecordsController');
-// Route::apiResource('sections', 'API\ClasslistController');
-// Route::apiResource('classlists', 'API\ImportedClasslistsController');
+
 Route::get('sections','API\ClasslistController@index')->name('section');
 
 Route::get('classlists/{section}','API\ImportedClasslistsController@show');
-// Route::get('classlists/{section}', function ($section){
-//     return $section;
+
+Route::post('lec/{id}','API\LecturesController@store');
+// Route::post('lec/{id}', function () {
+//     return ['asd'];
 // });
+

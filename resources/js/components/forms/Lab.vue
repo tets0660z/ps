@@ -9,6 +9,12 @@
       <table border="1" class="table-hover">
         <thead>
           <tr>
+            <th colspan="4"></th>
+            <th>
+              <button @click="removeScore">-</button>
+            </th>
+          </tr>
+          <tr>
             <th>#</th>
             <th>ID Number</th>
             <th>Name</th>
@@ -58,7 +64,7 @@
           <tr>
             <th colspan="4" class="text-center bg-primary">Female</th>
             <td v-for="(overAllScore,index) in form.overAllScores" :key="index">
-              <input v-model="overAllScore.value" class="quiz d-flex" name="over_all_scores" />
+              <input v-model="overAllScore.underScore" class="quiz d-flex" name="over_all_scores" />
             </td>
             <th>{{overAllScores}}</th>
             <td></td>
@@ -88,7 +94,6 @@
         </tbody>
       </table>
       <button type="submit">save</button>
-      <!-- <Transmutation :HPS="overAllScores"></Transmutation> -->
     </form>
     <div class="row">
       <div class="col-lg-6">Legend</div>
@@ -148,6 +153,12 @@ export default {
       this.form.labStudentScores.push({ studentScores: [] });
       this.form.titles.push({ titles: [] });
       this.form.overAllScores.push({ underScore: [] });
+    },
+    removeScore() {
+      this.form.labStudentScores.splice({ studentScores: [] });
+      this.form.titles.splice({ titles: [] });
+      this.form.overAllScores.splice({ underScore: [] });
+      this.inputs.splice(index, 1);
     }
   }
 };
