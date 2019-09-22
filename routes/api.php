@@ -18,7 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('classrecords', 'API\ClassRecordsController');
+// Route::apiResource('classrecords', 'API\ClassRecordsController');
+Route::post('lab', 'API\LaboratoriesController@store');
 
 Route::get('sections','API\ClasslistController@index')->name('section');
 

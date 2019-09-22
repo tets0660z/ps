@@ -11,7 +11,7 @@
           <tr>
             <th colspan="4"></th>
             <th>
-              <button @click="removeScore">-</button>
+              <!-- <button @click="removeScore">-</button> -->
             </th>
           </tr>
           <tr>
@@ -20,7 +20,7 @@
             <th>Name</th>
             <th>Course</th>
             <th v-for="(title,index) in form.titles" :key="index">
-              <input v-model="title.titles" class="quiz d-flex" name="titleszz" />
+              <input v-model="title.titles" class="quiz d-flex" />
             </th>
             <th>Total</th>
             <th>1st Grading</th>
@@ -54,8 +54,7 @@
             <td>{{classlist.course}}</td>
             <td v-for="(labStudentScore,i) in form.labStudentScores" :key="i">
               <input v-model="labStudentScore.studentScores[index]" name="student_scores" />
-              <input type="text" :value="index" name="gridRowMale" hidden />
-              <input type="text" :value="i" name="gridColMale" hidden />
+              <!-- [{{index}} , {{i}}] -->
             </td>
 
             <td>{{studentTotalScores[index]}}</td>
@@ -83,9 +82,7 @@
             <td>{{classlist.course}}</td>
             <td v-for="(labStudentScore,i) in form.labStudentScores" :key="i">
               <input v-model="labStudentScore.studentScores[index]" name="labStudentScore" />
-              <input type="text" :value="index" name="gridRowFemale" hidden />
-              <input type="text" :value="i" name="gridColFemale" hidden />
-              <input type="text" :value="classlist.id" name="studentId" hidden />
+              <!-- [{{index}} , {{i}}] -->
             </td>
 
             <td>{{studentTotalScores[index]}}</td>
@@ -108,7 +105,7 @@
 import Transmutation from "./Transmutation";
 import Accordion from "./Accordion";
 export default {
-  props: ["classlists"],
+  props: ["classlists", "instructor_id"],
   components: {
     Transmutation,
     Accordion
@@ -120,12 +117,20 @@ export default {
         titles: [],
         overAllScores: [],
         studentId: [],
-        studentId: ""
+        instructorId:this.instructor_id
       })
     };
   },
+  create() {
+    console.log(this.userId);
+  },
 
   computed: {
+    displayScores() {
+      axios
+        .get("/api/classlists/" + this.$route.params.placeName)
+        .then(({ data }) => (this.classlists = data));
+    },
     studentTotalScores: function() {
       return this.classlists.map((c, index) => {
         return this.form.labStudentScores.reduce((acc, item) => {
@@ -147,18 +152,14 @@ export default {
   },
   methods: {
     insertScore() {
-      this.form.post("api/classrecords");
+      const elements = this.classlists.map(e => e.id);
+      this.form.studentId = elements;
+      this.form.post("/api/lab");
     },
     addScore: function() {
       this.form.labStudentScores.push({ studentScores: [] });
       this.form.titles.push({ titles: [] });
       this.form.overAllScores.push({ underScore: [] });
-    },
-    removeScore() {
-      this.form.labStudentScores.splice({ studentScores: [] });
-      this.form.titles.splice({ titles: [] });
-      this.form.overAllScores.splice({ underScore: [] });
-      this.inputs.splice(index, 1);
     }
   }
 };

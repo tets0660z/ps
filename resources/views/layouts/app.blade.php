@@ -5,7 +5,7 @@
     <div id="app">
         @include('includes.nav')
         @include('includes.content')
-        <router-view></router-view>
+        <router-view :userid="{{ Auth::user()->id }}"></router-view>
         <vue-progress-bar></vue-progress-bar>
         @csrf
     </div>

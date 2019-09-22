@@ -28,11 +28,7 @@ class ClassRecordsController extends Controller
      */
     public function store(Request $request)
     {
-   $titles = $request['myStudentId'];
-//    $myString = implode(',', array_column($titles, 'value'));
-   dd($titles);
-         ClassRecord::create(['titles'=>$titles]);
-        //  ClassRecord::insert(['titles'=>$titles]);
+        
     }
     
     /**

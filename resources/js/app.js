@@ -45,7 +45,14 @@ const routes = [
     {
         path: "/classrecord/:placeName",
         name: "classrecord",
+        props: true,
         component: require("./components/ClassRecord.vue").default
+    },
+    {
+        path: "/classrecord/labview/:placeName",
+        name: "labview",
+        props: true,
+        component: require("./components/classrecords/LabDisplay.vue").default
     }
 ];
 

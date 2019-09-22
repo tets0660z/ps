@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class ClassRecord extends Model
 {
     protected $guarded=[];
-
+    // protected $casts = [
+    //  'lab_student_score'=>'array'
+    // ];
 
 }

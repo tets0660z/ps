@@ -10,11 +10,12 @@
       >{{ tab }}</span>
     </div>
     <lec v-show="selectedTab === 'Lec'" :classlists="classlists"></lec>
-    <lab v-show="selectedTab === 'Lab'" :classlists="classlists"></lab>
+    <lab v-show="selectedTab === 'Lab'" :classlists="classlists" :instructor_id="userid"></lab>
     <LecLab4060 v-show="selectedTab === 'Lec-Lab40-60'" :classlists="classlists"></LecLab4060>
     <LecLab5050 v-show="selectedTab === 'Lec-Lab50-50'" :classlists="classlists"></LecLab5050>
     <LecLab6040 v-show="selectedTab === 'Lec-Lab60-40'"></LecLab6040>
     <!-- {{$route.params.placeName}} -->
+    {{userid}}
   </div>
 </template>
 
@@ -26,10 +27,11 @@ import LecLab5050 from "./forms/LecLab5050";
 import LecLab6040 from "./forms/LecLab6040";
 
 export default {
+  props: ["userid"],
   data() {
     return {
       tabs: ["Lec", "Lab", "Lec-Lab40-60", "Lec-Lab50-50", "Lec-Lab60-40"],
-      selectedTab: "Lec",
+      selectedTab: "Lab",
       classlists: "",
       gender: "female",
       labScore: []
@@ -45,13 +47,16 @@ export default {
   },
   created() {
     this.displayClasslists();
+    // console.log(this.userId);
   },
   components: {
+    // forms
     Lec,
     Lab,
     LecLab4060,
     LecLab5050,
     LecLab6040
+    // display class records
   }
 };
 </script>

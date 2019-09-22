@@ -6,9 +6,8 @@ use App\Laboratory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\ClassRecord;
-use DB;
+// use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 class LaboratoriesController extends Controller
 {
     /**
@@ -29,30 +28,40 @@ class LaboratoriesController extends Controller
      */
     public function store(Request $request)
     {
-        dd(Auth::user()->name);
-        $titles = Arr::flatten($request->titles);
-        $student_scores =$request->labStudentScores;
-        $student_ids = $request->studentId;
-        $over_all_scores = Arr::flatten($request->overAllScores); 
+    
+        $student_scores = $request->labStudentScores;
         dd($student_scores);
+        $titles = Arr::flatten($request->titles);
         $count_titles = count($titles);
-
+       
         //count titles
-        for ($t=0; $t < $count_titles; $t++) { 
-            //count student id
-            for ($s_id=0; $s_id < count($student_ids); $s_id++) { 
-                $student_id = $student_ids[$s_id];
-                $student_score = Arr::get($student_scores[$t],'studentScores');
-                ClassRecord::firstOrCreate([
-                    'titles'=> $titles[$t],
-                    'imported_classlists_id' =>$student_id,
-                    'lab_score' =>$over_all_scores[$t],
-                    'lab_student_scores' =>$student_score[$s_id],
-                ]);
+        for ($c_t=0; $c_t < $count_titles; $c_t++) { 
+            $title="";
+            $student_score="";
+
+            // get title, 
+            for ($index=0; $index <= $c_t; $index++) { 
+                $title= $titles[$c_t];
             }
-            
-        }    
-    }
+            // get student scores, 
+            for ($s_s=0; $s_s <= $c_t; $s_s++) { 
+                $student_score= $student_scores[$c_t];
+                $scores = Arr::get($student_score, 'studentScores');
+                
+              
+            }
+            ClassRecord::firstOrCreate([
+                'imported_classlists_id' =>$request->id,
+                'date'=> NOW(),
+                'titles'=>$title,
+            ]);
+        }
+
+       }
+
+    
+
+    
 
     /**
      * Display the specified resource.

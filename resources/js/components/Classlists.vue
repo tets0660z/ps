@@ -15,6 +15,7 @@
             <router-link
               :to="{name:'classrecord',params:{placeName: section.sections}}"
             >{{section.sections}}</router-link>
+            <router-link :to="{name:'labview',params:{placeName: section.sections}}">view</router-link>
           </td>
         </tr>
       </tbody>
