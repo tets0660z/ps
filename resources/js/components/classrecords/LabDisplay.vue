@@ -1,7 +1,6 @@
 <template>
   <div class="container">
-    {{this.$route.params.placeName}}
-    {{classlists}}
+    <ul v-for="c in classlists" :key="c.id">{{c.sections}}</ul>
   </div>
 </template>
 
@@ -9,6 +8,10 @@
 export default {
   data() {
     return {
+      labStudentScores: "",
+      titles: "",
+      overAllScores: "",
+      studentId: "",
       classlists: ""
     };
   },
@@ -16,13 +19,12 @@ export default {
     displayClasslists() {
       this.$Progress.start();
       axios
-        .get("/api/classlists/" + this.$route.params.placeName)
+        .get("/api/labview/" + this.$route.params.placeName)
         .then(({ data }) => this.$Progress.finish((this.classlists = data)));
     }
   },
-  create() {
+  created() {
     this.displayClasslists();
-    console.log(this.classlists);
   }
 };
 </script>

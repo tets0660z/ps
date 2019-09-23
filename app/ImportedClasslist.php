@@ -3,13 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\ClassRecord;
 class ImportedClasslist extends Model
 {
     protected $guarded=[];
 
-    // public function instructors()
-    // {
-    //     return $this->belongsTo('App\Instructor');
-    // }
+    public function classrecords()
+    {
+        return $this->hasMany(ClassRecord::class,'imported_classlists_id');
+    }
+
 }

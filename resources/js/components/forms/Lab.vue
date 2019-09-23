@@ -54,6 +54,7 @@
             <td>{{classlist.course}}</td>
             <td v-for="(labStudentScore,i) in form.labStudentScores" :key="i">
               <input v-model="labStudentScore.studentScores[index]" name="student_scores" />
+
               <!-- [{{index}} , {{i}}] -->
             </td>
 
@@ -82,7 +83,6 @@
             <td>{{classlist.course}}</td>
             <td v-for="(labStudentScore,i) in form.labStudentScores" :key="i">
               <input v-model="labStudentScore.studentScores[index]" name="labStudentScore" />
-              <!-- [{{index}} , {{i}}] -->
             </td>
 
             <td>{{studentTotalScores[index]}}</td>
@@ -117,12 +117,14 @@ export default {
         titles: [],
         overAllScores: [],
         studentId: [],
-        instructorId:this.instructor_id
+        instructorId: this.instructor_id,
+        indexR: "",
+        indexC: ""
       })
     };
   },
-  create() {
-    console.log(this.userId);
+  created() {
+    console.log("hello world");
   },
 
   computed: {
@@ -154,9 +156,13 @@ export default {
     insertScore() {
       const elements = this.classlists.map(e => e.id);
       this.form.studentId = elements;
+      // console.log(this.form.studentId);
       this.form.post("/api/lab");
     },
     addScore: function() {
+      // return this.classlists.map((c, index) => {
+      //   console.log(c);
+      // });
       this.form.labStudentScores.push({ studentScores: [] });
       this.form.titles.push({ titles: [] });
       this.form.overAllScores.push({ underScore: [] });

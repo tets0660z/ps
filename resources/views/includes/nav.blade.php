@@ -11,7 +11,7 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
                 <a href="/home" class="mr-2">Home</a>
-                <router-link to="/classlists" :instructorId='1'>Classlists</router-link>
+                <router-link to="/classlists">Classlists</router-link>
             </ul>
 
             <!-- Right Side Of Navbar -->

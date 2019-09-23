@@ -3,12 +3,18 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\ImportedClasslist;
 class ClassRecord extends Model
 {
     protected $guarded=[];
-    // protected $casts = [
-    //  'lab_student_score'=>'array'
-    // ];
+    protected $casts = [    
+    //  'grid_col'=>'array',
+    //  'grid_row'=>'array'
+    ];
+
+    public function importedclasslists()
+    {
+        return $this->belongsTo(ImportedClasslist::class,'imported_classlists_id');
+    }
 
 }

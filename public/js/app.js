@@ -2015,10 +2015,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      labStudentScores: "",
+      titles: "",
+      overAllScores: "",
+      studentId: "",
       classlists: ""
     };
   },
@@ -2027,15 +2030,14 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.$Progress.start();
-      axios.get("/api/classlists/" + this.$route.params.placeName).then(function (_ref) {
+      axios.get("/api/labview/" + this.$route.params.placeName).then(function (_ref) {
         var data = _ref.data;
         return _this.$Progress.finish(_this.classlists = data);
       });
     }
   },
-  create: function create() {
+  created: function created() {
     this.displayClasslists();
-    console.log(this.classlists);
   }
 });
 
@@ -2249,12 +2251,14 @@ __webpack_require__.r(__webpack_exports__);
         titles: [],
         overAllScores: [],
         studentId: [],
-        instructorId: this.instructor_id
+        instructorId: this.instructor_id,
+        indexR: "",
+        indexC: ""
       })
     };
   },
-  create: function create() {
-    console.log(this.userId);
+  created: function created() {
+    console.log("hello world");
   },
   computed: {
     displayScores: function displayScores() {
@@ -2289,10 +2293,14 @@ __webpack_require__.r(__webpack_exports__);
       var elements = this.classlists.map(function (e) {
         return e.id;
       });
-      this.form.studentId = elements;
+      this.form.studentId = elements; // console.log(this.form.studentId);
+
       this.form.post("/api/lab");
     },
     addScore: function addScore() {
+      // return this.classlists.map((c, index) => {
+      //   console.log(c);
+      // });
       this.form.labStudentScores.push({
         studentScores: []
       });
@@ -44293,15 +44301,14 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _vm._v(
-      "\n  " +
-        _vm._s(this.$route.params.placeName) +
-        "\n  " +
-        _vm._s(_vm.classlists) +
-        "\n"
-    )
-  ])
+  return _c(
+    "div",
+    { staticClass: "container" },
+    _vm._l(_vm.classlists, function(c) {
+      return _c("ul", { key: c.id }, [_vm._v(_vm._s(c.sections))])
+    }),
+    0
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
