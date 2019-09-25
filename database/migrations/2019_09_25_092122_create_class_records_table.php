@@ -23,7 +23,7 @@ class CreateClassRecordsTable extends Migration
             
            
             $table->unsignedBigInteger('id_number')->index()->nullable();
-            $table->foreign('id_number')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_number')->references('id')->on('classlists')->onDelete('cascade');
 
             $table->timestamps();
         });

@@ -8,6 +8,6 @@ use Faker\Generator as Faker;
 $factory->define(Subject::class, function (Faker $faker) {
     return [
         'subject_code' => $faker->colorName,
-        'description' => $faker->name,
+        'descriptive_title' => $faker->name,
     ];
 });

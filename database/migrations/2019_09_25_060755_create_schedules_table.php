@@ -15,16 +15,14 @@ class CreateSchedulesTable extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('schedule');
-            $table->string('section');
-            $table->string('id_number');
-            
+            $table->string('schedule')->nullable();
+            $table->string('section')->nullable();
 
             $table->unsignedBigInteger('subject_id')->index()->nullable();
-            $table->foreign('subject_id')->references('id')->on('schedule')->onDelete('cascade');
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
 
             $table->unsignedBigInteger('instructor_id')->index()->nullable();
-            $table->foreign('instructor_id')->references('id')->on('user')->onDelete('cascade');
+            $table->foreign('instructor_id')->references('id')->on('users')->onDelete('cascade');
 
 
             $table->timestamps();
