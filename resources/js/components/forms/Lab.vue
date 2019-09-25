@@ -88,6 +88,13 @@
             <td>{{studentTotalScores[index]}}</td>
           </tr>
           <!-- ./FEMALE -->
+          <tr>
+            <th colspan="4" class="text-center bg-primary">Date</th>
+            <th class="relative" v-for="(date,index) in form.dates" :key="index">
+              <input type="date" class="InVertAlign" v-model="date.dates" />
+            </th>
+          </tr>
+          <!-- ./DATE -->
         </tbody>
       </table>
       <button type="submit">save</button>
@@ -118,8 +125,7 @@ export default {
         overAllScores: [],
         studentId: [],
         instructorId: this.instructor_id,
-        indexR: "",
-        indexC: ""
+        dates: []
       })
     };
   },
@@ -142,10 +148,10 @@ export default {
       });
     },
     overAllScores: function() {
-      return this.form.overAllScores.reduce(
-        (acc, item) => acc + parseInt(item.underScore, 10) || 0,
-        0
-      );
+      return this.form.overAllScores.reduce((acc, item) => {
+        const value = parseInt(item.underScore, 10) || 0;
+        return acc + value;
+      }, 0);
     },
 
     studentTotal: function() {
@@ -160,12 +166,10 @@ export default {
       this.form.post("/api/lab");
     },
     addScore: function() {
-      // return this.classlists.map((c, index) => {
-      //   console.log(c);
-      // });
       this.form.labStudentScores.push({ studentScores: [] });
       this.form.titles.push({ titles: [] });
       this.form.overAllScores.push({ underScore: [] });
+      this.form.dates.push({ dates: [] });
     }
   }
 };
@@ -181,9 +185,19 @@ export default {
 input {
   width: 30px;
 }
-/* input[type="date"] {
+.relative {
+  position: relative;
+  height: 120px;
+  /* border: 3px solid #73ad21; */
+}
+.InVertAlign {
   transform: rotate(-90deg);
-} */
+  position: absolute;
+  top: 45px;
+  left: -45px;
+  width: 120px;
+  margin-left: 0;
+}
 .btn-primary {
   width: 50px;
   height: 50px;

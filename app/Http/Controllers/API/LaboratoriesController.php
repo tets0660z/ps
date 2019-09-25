@@ -40,6 +40,7 @@ class LaboratoriesController extends Controller
         $student_ids = $request->studentId;
         $over_all_scores = Arr::flatten($request->overAllScores); 
         // dd($student_scores);
+        $dates=Arr::flatten($request->dates);
         $count_titles = count($titles);
 
         //count titles
@@ -56,8 +57,8 @@ class LaboratoriesController extends Controller
                     'imported_classlists_id' =>$student_id,
                     'lab_score' =>$over_all_scores[$t],
                     'lab_student_scores' =>$student_score[$s_id],
-                    'grid_col' => $s_id,
-                    'grid_row' => $t,
+                    'date' => $dates[$t],
+
                 ]);
             }
             

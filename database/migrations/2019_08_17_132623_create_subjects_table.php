@@ -16,10 +16,11 @@ class CreateSubjectsTable extends Migration
         Schema::create('subjects', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->String('subject_code');
-            $table->String('description');  
+            $table->String('descriptive_title');  
             $table->String('term')->nullable();
             $table->String('year_level')->nullable();
             $table->integer('units')->nullable();
+            $table->integer('nature')->nullable();
             $table->timestamps();
         });
     }
