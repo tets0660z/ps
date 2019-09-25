@@ -19,7 +19,7 @@ class CreateClassRecordsTable extends Migration
             $table->string('hps')->nullable();
             $table->string('student_score')->nullable();
             $table->date('date')->nullable();
-            $table->date('grading_period')->nullable();
+            $table->string('grading_period')->nullable();
             
            
             $table->unsignedBigInteger('id_number')->index()->nullable();
