@@ -14,8 +14,6 @@
     <LecLab4060 v-show="selectedTab === 'Lec-Lab40-60'" :classlists="classlists"></LecLab4060>
     <LecLab5050 v-show="selectedTab === 'Lec-Lab50-50'" :classlists="classlists"></LecLab5050>
     <LecLab6040 v-show="selectedTab === 'Lec-Lab60-40'"></LecLab6040>
-    <!-- {{$route.params.placeName}} -->
-    {{userid}}
   </div>
 </template>
 
@@ -38,7 +36,7 @@ export default {
     };
   },
   methods: {
-    displayClasslists() {
+    displaySections() {
       this.$Progress.start();
       axios
         .get("/api/classlists/" + this.$route.params.placeName)
@@ -46,7 +44,7 @@ export default {
     }
   },
   created() {
-    this.displayClasslists();
+    this.displaySections();
     // console.log(this.userId);
   },
   components: {

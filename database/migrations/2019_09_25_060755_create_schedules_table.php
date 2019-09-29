@@ -17,6 +17,7 @@ class CreateSchedulesTable extends Migration
             $table->bigIncrements('id');
             $table->string('schedule')->nullable();
             $table->string('section')->nullable();
+            $table->string('nature')->nullable();
 
             $table->unsignedBigInteger('subject_id')->index()->nullable();
             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');

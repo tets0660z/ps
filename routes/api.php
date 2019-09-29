@@ -24,7 +24,7 @@ Route::get('labview/{section}', 'API\LaboratoriesController@index');
 
 Route::get('sections','API\ClasslistController@index')->name('section');
 
-Route::get('classlists/{section}','API\ImportedClasslistsController@show');
+Route::get('classlists/{section}','API\ClasslistController@show');
 
 Route::post('lec/{id}','API\LecturesController@store');
 // Route::post('lec/{id}', function () {

@@ -12,4 +12,8 @@ class Classlist extends Model
     {
         return $this->hasMany(ClassRecord::class,'imported_classlists_id');
     }
+    public function schedule()
+    {
+        return $this->belongsTo(Schedule::class,'schedule_id');
+    }
 }

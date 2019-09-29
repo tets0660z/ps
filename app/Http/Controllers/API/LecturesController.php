@@ -28,9 +28,7 @@ class LecturesController extends Controller
     public function store(Request $request)
     {
         
-         return ClassRecord::firstOrCreate([
-            'imported_classlists_id' => $request->id
-        ]); 
+         
     }
  
     /**

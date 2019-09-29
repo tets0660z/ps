@@ -1862,8 +1862,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -1881,7 +1879,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    displayClasslists: function displayClasslists() {
+    displaySections: function displaySections() {
       var _this = this;
 
       this.$Progress.start();
@@ -1892,7 +1890,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.displayClasslists(); // console.log(this.userId);
+    this.displaySections(); // console.log(this.userId);
   },
   components: {
     // forms
@@ -1916,6 +1914,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -2408,11 +2407,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     insertScore: function insertScore() {
-      var elements = this.classlists.map(function (e) {
-        return e.id;
-      });
-      this.form.studentId = elements; // console.log(this.form.studentId);
-
+      // const elements = this.classlists.map(e => e.id_number);
+      // this.form.studentId = elements;
+      // console.log(this.form.studentId);
       this.form.post("/api/lab");
     },
     addScore: function addScore() {
@@ -2445,106 +2442,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -44309,9 +44206,7 @@ var render = function() {
             expression: "selectedTab === 'Lec-Lab60-40'"
           }
         ]
-      }),
-      _vm._v(" "),
-      _vm._v("\n  " + _vm._s(_vm.userid) + "\n")
+      })
     ],
     1
   )
@@ -44351,17 +44246,19 @@ var render = function() {
             _c(
               "td",
               [
+                _c("router-link", { attrs: { to: "/classrecord" } }),
+                _vm._v(" "),
                 _c(
                   "router-link",
                   {
                     attrs: {
                       to: {
                         name: "classrecord",
-                        params: { placeName: section.sections }
+                        params: { placeName: section.section }
                       }
                     }
                   },
-                  [_vm._v(_vm._s(section.sections))]
+                  [_vm._v(_vm._s(section.section))]
                 ),
                 _vm._v(" "),
                 _c(
@@ -44370,7 +44267,7 @@ var render = function() {
                     attrs: {
                       to: {
                         name: "labview",
-                        params: { placeName: section.sections }
+                        params: { placeName: section.section }
                       }
                     }
                   },
@@ -44959,10 +44856,10 @@ var render = function() {
                         name: "show",
                         rawName: "v-show",
                         value: classlist.gender === "male",
-                        expression: "classlist.gender ==='male'"
+                        expression: "classlist.gender === 'male'"
                       }
                     ],
-                    key: "labm" + classlist.id
+                    key: index + "lab"
                   },
                   [
                     _c("td", [
@@ -44993,7 +44890,7 @@ var render = function() {
                     _c("td", [
                       _vm._v(
                         "\n            " +
-                          _vm._s(classlist.student) +
+                          _vm._s(classlist.name) +
                           "\n            "
                       ),
                       _c("input", {
@@ -45121,14 +45018,14 @@ var render = function() {
                         expression: "classlist.gender ==='female'"
                       }
                     ],
-                    key: "labf" + classlist.id
+                    key: index
                   },
                   [
                     _c("td", [_vm._v(_vm._s(index + 1))]),
                     _vm._v(" "),
                     _c("td"),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(classlist.student))]),
+                    _c("td", [_vm._v(_vm._s(classlist.name))]),
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(classlist.course))]),
                     _vm._v(" "),
@@ -45267,421 +45164,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "mb-2" }, [
-      _c("label", { attrs: { for: "score" } }, [_vm._v("Add Score:")]),
-      _vm._v(" "),
-      _c("button", { attrs: { type: "button" }, on: { click: _vm.addScore } }, [
-        _vm._v("FG(+)")
-      ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "form",
-      {
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.insertScore($event)
-          }
-        }
-      },
-      [
-        _c("table", { staticClass: "table-hover", attrs: { border: "1" } }, [
-          _c("thead", [
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "tr",
-              [
-                _c("th", [_vm._v("#")]),
-                _vm._v(" "),
-                _c("th", [_vm._v("ID Number")]),
-                _vm._v(" "),
-                _c("th", [_vm._v("Name")]),
-                _vm._v(" "),
-                _c("th", [_vm._v("Course")]),
-                _vm._v(" "),
-                _vm._l(_vm.titles, function(title, index) {
-                  return _c("th", { key: index }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: title.titles,
-                          expression: "title.titles"
-                        }
-                      ],
-                      staticClass: "quiz d-flex",
-                      attrs: { name: "titleszz" },
-                      domProps: { value: title.titles },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(title, "titles", $event.target.value)
-                        }
-                      }
-                    })
-                  ])
-                }),
-                _vm._v(" "),
-                _c("th", [_vm._v("Total")]),
-                _vm._v(" "),
-                _c("th", [_vm._v("1st Grading")])
-              ],
-              2
-            )
-          ]),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            [
-              _c(
-                "tr",
-                [
-                  _c(
-                    "th",
-                    {
-                      staticClass: "text-center bg-primary",
-                      attrs: { colspan: "4" }
-                    },
-                    [_vm._v("Male")]
-                  ),
-                  _vm._v(" "),
-                  _vm._l(_vm.overAll, function(overAllScore, index) {
-                    return _c("td", { key: index }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: overAllScore.underScore,
-                            expression: "overAllScore.underScore"
-                          }
-                        ],
-                        staticClass: "quiz d-flex",
-                        attrs: { name: "labScore" },
-                        domProps: { value: overAllScore.underScore },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              overAllScore,
-                              "underScore",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
-                    ])
-                  }),
-                  _vm._v(" "),
-                  _c("th", [_vm._v(_vm._s(_vm.overAll))]),
-                  _vm._v(" "),
-                  _c("td")
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _vm._l(_vm.classlists, function(classlist, index) {
-                return _c(
-                  "tr",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: classlist.gender === "male",
-                        expression: "classlist.gender ==='male'"
-                      }
-                    ],
-                    key: "labm" + classlist.id
-                  },
-                  [
-                    _c("td", [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: classlist.id,
-                            expression: "classlist.id"
-                          }
-                        ],
-                        attrs: { type: "text" },
-                        domProps: { value: classlist.id },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(classlist, "id", $event.target.value)
-                          }
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("td"),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(
-                        "\n            " +
-                          _vm._s(classlist.student) +
-                          "\n            "
-                      ),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: classlist.id,
-                            expression: "classlist.id"
-                          }
-                        ],
-                        attrs: { type: "text", hidden: "" },
-                        domProps: { value: classlist.id },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(classlist, "id", $event.target.value)
-                          }
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(classlist.course))]),
-                    _vm._v(" "),
-                    _vm._l(_vm.labStudentScores, function(labStudentScore, i) {
-                      return _c("td", { key: i }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: labStudentScore.studentScores[index],
-                              expression: "labStudentScore.studentScores[index]"
-                            }
-                          ],
-                          attrs: { name: "student_scores" },
-                          domProps: {
-                            value: labStudentScore.studentScores[index]
-                          },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                labStudentScore.studentScores,
-                                index,
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("input", {
-                          attrs: {
-                            type: "text",
-                            name: "gridRowMale",
-                            hidden: ""
-                          },
-                          domProps: { value: index }
-                        }),
-                        _vm._v(" "),
-                        _c("input", {
-                          attrs: {
-                            type: "text",
-                            name: "gridColMale",
-                            hidden: ""
-                          },
-                          domProps: { value: i }
-                        })
-                      ])
-                    }),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(_vm.studentTotalScores[index]))])
-                  ],
-                  2
-                )
-              }),
-              _vm._v(" "),
-              _c(
-                "tr",
-                [
-                  _c(
-                    "th",
-                    {
-                      staticClass: "text-center bg-primary",
-                      attrs: { colspan: "4" }
-                    },
-                    [_vm._v("Female")]
-                  ),
-                  _vm._v(" "),
-                  _vm._l(_vm.overAllScores, function(overAllScore, index) {
-                    return _c("td", { key: index }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: overAllScore.underScore,
-                            expression: "overAllScore.underScore"
-                          }
-                        ],
-                        staticClass: "quiz d-flex",
-                        attrs: { name: "over_all_scores" },
-                        domProps: { value: overAllScore.underScore },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              overAllScore,
-                              "underScore",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
-                    ])
-                  }),
-                  _vm._v(" "),
-                  _c("th", [_vm._v(_vm._s(_vm.overAllScores))]),
-                  _vm._v(" "),
-                  _c("td")
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _vm._l(_vm.classlists, function(classlist, index) {
-                return _c(
-                  "tr",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: classlist.gender === "female",
-                        expression: "classlist.gender ==='female'"
-                      }
-                    ],
-                    key: "labf" + classlist.id
-                  },
-                  [
-                    _c("td", [_vm._v(_vm._s(index + 1))]),
-                    _vm._v(" "),
-                    _c("td"),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(classlist.student))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(classlist.course))]),
-                    _vm._v(" "),
-                    _vm._l(_vm.labStudentScores, function(labStudentScore, i) {
-                      return _c("td", { key: i }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: labStudentScore.studentScores[index],
-                              expression: "labStudentScore.studentScores[index]"
-                            }
-                          ],
-                          attrs: { name: "labStudentScore" },
-                          domProps: {
-                            value: labStudentScore.studentScores[index]
-                          },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                labStudentScore.studentScores,
-                                index,
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("input", {
-                          attrs: {
-                            type: "text",
-                            name: "gridRowFemale",
-                            hidden: ""
-                          },
-                          domProps: { value: index }
-                        }),
-                        _vm._v(" "),
-                        _c("input", {
-                          attrs: {
-                            type: "text",
-                            name: "gridColFemale",
-                            hidden: ""
-                          },
-                          domProps: { value: i }
-                        }),
-                        _vm._v(" "),
-                        _c("input", {
-                          attrs: {
-                            type: "text",
-                            name: "studentId",
-                            hidden: ""
-                          },
-                          domProps: { value: classlist.id }
-                        })
-                      ])
-                    }),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(_vm.studentTotalScores[index]))])
-                  ],
-                  2
-                )
-              })
-            ],
-            2
-          )
-        ]),
-        _vm._v(" "),
-        _c("button", { attrs: { type: "submit" } }, [_vm._v("save")])
-      ]
-    ),
-    _vm._v(" "),
-    _vm._m(1)
-  ])
+  return _c("div")
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("th", { attrs: { colspan: "4" } }),
-      _vm._v(" "),
-      _c("th")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-lg-6" }, [_vm._v("Legend")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-6" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

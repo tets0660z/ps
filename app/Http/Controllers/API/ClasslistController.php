@@ -15,7 +15,7 @@ class ClasslistController extends Controller
      */
     public function index()
     {
-    return DB::table('imported_classlists')->distinct()->get('sections');
+    return DB::table('schedules')->distinct()->get('section');
     // return ImportedClasslist::all();
     }
 
@@ -36,11 +36,15 @@ class ClasslistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($section)
     {
-        //
+        $users = DB::table('users')
+        ->join('classlists','users.id','classlists.id_number')
+        ->join('schedules','schedules.id','classlists.schedule_id')
+        ->where('section' ,$section)->get();
+        return $users;
+   
     }
-
     /**
      * Update the specified resource in storage.
      *

@@ -40,15 +40,15 @@
 
           <tr
             v-for="(classlist,index) in classlists"
-            :key="'labm'+ classlist.id"
-            v-show="classlist.gender ==='male'"
+            :key="index + 'lab'"
+            v-show="classlist.gender === 'male'"
           >
             <td>
               <input type="text" v-model="classlist.id" />
             </td>
             <td></td>
             <td>
-              {{classlist.student}}
+              {{classlist.name}}
               <input type="text" v-model="classlist.id" hidden />
             </td>
             <td>{{classlist.course}}</td>
@@ -74,12 +74,12 @@
 
           <tr
             v-for="(classlist,index) in classlists"
-            :key="'labf'+ classlist.id"
+            :key="index"
             v-show="classlist.gender ==='female'"
           >
             <td>{{index +1}}</td>
             <td></td>
-            <td>{{classlist.student}}</td>
+            <td>{{classlist.name}}</td>
             <td>{{classlist.course}}</td>
             <td v-for="(labStudentScore,i) in form.labStudentScores" :key="i">
               <input v-model="labStudentScore.studentScores[index]" name="labStudentScore" />
@@ -160,7 +160,7 @@ export default {
   },
   methods: {
     insertScore() {
-      const elements = this.classlists.map(e => e.id);
+      const elements = this.classlists.map(e => e.id_number);
       this.form.studentId = elements;
       // console.log(this.form.studentId);
       this.form.post("/api/lab");

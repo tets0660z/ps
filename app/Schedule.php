@@ -16,4 +16,10 @@ class Schedule extends Model
     {
         return $this->hasMany(Subject::class, 'subject_id');
     }
+
+    public function classlists()
+    {
+        return $this->hasMany(Classlist::class, 'schedule_id');
+    }
+    
 }

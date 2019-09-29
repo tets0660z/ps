@@ -11,11 +11,12 @@
       <tbody>
         <tr v-for="section in sections" :key="section.id">
           <td>
-            <!-- <router-link to="/classrecord"></router-link> -->
+            <router-link to="/classrecord"></router-link>
             <router-link
-              :to="{name:'classrecord',params:{placeName: section.sections}}"
-            >{{section.sections}}</router-link>
-            <router-link :to="{name:'labview',params:{placeName: section.sections}}">view</router-link>
+              :to="{name:'classrecord',params:{placeName: section.section}}"
+            >{{section.section}}</router-link>
+            <router-link :to="{name:'labview',params:{placeName: section.section}}">view</router-link>
+            
           </td>
         </tr>
       </tbody>

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ScheduleTableSeeder extends Seeder
+class ClasslistsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +11,6 @@ class ScheduleTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class,10)->create();
-        
+        factory(App\Classlist::class, 40)->create();
     }
 }

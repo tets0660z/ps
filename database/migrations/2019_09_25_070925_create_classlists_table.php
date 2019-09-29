@@ -15,7 +15,9 @@ class CreateClasslistsTable extends Migration
     {
         Schema::create('classlists', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->String('id_number')->nullable()->unique();
+
+            $table->unsignedBigInteger('id_number')->index()->nullable();
+            $table->foreign('id_number')->references('id')->on('users')->onDelete('cascade');
 
             $table->unsignedBigInteger('schedule_id')->index()->nullable();
             $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
