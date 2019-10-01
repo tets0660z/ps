@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 Auth::routes();
 
+Route::post('lab', 'API\LaboratoriesController@store');
 
 Route::post('/user','ImportController@import')->name('user');
 

@@ -19,7 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // Route::apiResource('classrecords', 'API\ClassRecordsController');
-Route::post('lab', 'API\LaboratoriesController@store');
+// Route::post('lab', 'API\LaboratoriesController@store');
+
 Route::get('labview/{section}', 'API\LaboratoriesController@index');
 
 Route::get('sections','API\ClasslistController@index')->name('section');
@@ -27,6 +28,8 @@ Route::get('sections','API\ClasslistController@index')->name('section');
 Route::get('classlists/{section}','API\ClasslistController@show');
 
 Route::post('lec/{id}','API\LecturesController@store');
+
+Route::post('lec','API\LecturesController@store');
 // Route::post('lec/{id}', function () {
 //     return ['asd'];
 // });

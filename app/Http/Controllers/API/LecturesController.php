@@ -28,7 +28,8 @@ class LecturesController extends Controller
     public function store(Request $request)
     {
         
-         
+        //  return ['na'=>'l'];
+        dd($request->labStudentScores);
     }
  
     /**

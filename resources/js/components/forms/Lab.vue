@@ -4,8 +4,11 @@
       <label for="score">Add Score:</label>
       <button type="button" @click="addScore">FG(+)</button>
     </div>
-
     <form @submit.prevent="insertScore">
+      <button type="submit">sss</button>
+    </form>
+
+    <form>
       <table border="1" class="table-hover">
         <thead>
           <tr>
@@ -160,10 +163,11 @@ export default {
   },
   methods: {
     insertScore() {
-      const elements = this.classlists.map(e => e.id_number);
-      this.form.studentId = elements;
-      // console.log(this.form.studentId);
-      this.form.post("/api/lab");
+      this.form.post("/lab");
+
+      // const elements = this.classlists.map(e => e.id_number);
+      // this.form.studentId = elements;
+      // // console.log(this.form.studentId);
     },
     addScore: function() {
       this.form.labStudentScores.push({ studentScores: [] });

@@ -20,8 +20,8 @@ class LaboratoriesController extends Controller
      */
     public function index($section)
     {
-        $classlists = ImportedClasslist::with('classrecords')->where('sections',$section)->get();
-        return $classlists;
+        return ImportedClasslist::with('classrecords')->where('sections',$section)->get();
+        // return $classlists;
         
     }
 
@@ -33,6 +33,9 @@ class LaboratoriesController extends Controller
      */
     public function store(Request $request)
     {
+        
+        return ['asd'=>'asd'];
+        // dd($requesrt->studentId);
         // dd($request->instructorId);
         // $titles = Arr::flatten($request->titles);
         // $student_scores =$request->labStudentScores;
