@@ -4,9 +4,8 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use DB;
-use App\ImportedClasslist;
-class ClasslistController extends Controller
+
+class LecLab4060 extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,7 @@ class ClasslistController extends Controller
      */
     public function index()
     {
-    return DB::table('schedules')->distinct()->get('section');
-    // return ImportedClasslist::all();
+        //
     }
 
     /**
@@ -27,7 +25,16 @@ class ClasslistController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $labHps = $request->labHPS;
+        $studentScores = $request->labStudentScores;
+        $dates = $request->dates;
+        $labTitles = $request->labTitles;
+        $otherTitles = $request->otherTitles;
+        $others = $request->others;
+        $othersOverAllScores = $request->othersOverAllScores;
+        $overAllScores = $request->overAllScores;
+        $slabStudentScores = $request->slabStudentScores;
+        $titles = $request->titles;
     }
 
     /**
@@ -36,15 +43,11 @@ class ClasslistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($section)
+    public function show($id)
     {
-        $users = DB::table('schedule_student')
-        ->join('students','users.id','students.id')
-        ->join('schedules','schedules.id','students.schedule_id')
-        ->where('section' ,$section)->get();
-        return $users;
-   
+        //
     }
+
     /**
      * Update the specified resource in storage.
      *

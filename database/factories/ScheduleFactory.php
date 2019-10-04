@@ -6,16 +6,12 @@ use App\Schedule;
 use Faker\Generator as Faker;
 
 $factory->define(Schedule::class, function (Faker $faker) {
-    $section = $faker->randomElement($array = array('IDD1', 'IDD2'));
-    $schedule = $faker->randomElement($array = array('m', 't'));
+    $section = $faker->randomElement($array = array('IDD1', 'IDD2','IDC4'));
+    $day = $faker->randomElement($array = array('m', 't'));
+    $teacher = 41;
     return [
-        'schedule'=>$schedule,
+        'day'=>$day,
         'section'=>$section,
-        'subject_id' => function () {
-            return factory(App\Subject::class)->create();
-        }
-        // 'instructor_id' => function () {
-        //     return factory(App\Instructor::class)->create();
-        // }
+        // 'teacher_id' => $teacher
     ];
 });

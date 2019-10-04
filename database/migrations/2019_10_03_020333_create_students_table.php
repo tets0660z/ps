@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLegendsTable extends Migration
+class CreateStudentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateLegendsTable extends Migration
      */
     public function up()
     {
-        Schema::create('legends', function (Blueprint $table) {
+        Schema::create('students', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('description');
-
-            $table->unsignedBigInteger('activity_title')->index()->nullable();
-            $table->foreign('activity_title')->references('id')->on('class_records')->onDelete('cascade');
-
+            
+            $table->unsignedBigInteger('id_number')->index()->nullable();
+            $table->foreign('id_number')->references('id')->on('users');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateLegendsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('legends');
+        Schema::dropIfExists('students');
     }
 }

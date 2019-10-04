@@ -32,6 +32,8 @@
             </th>
 
             <th>OT</th>
+            <th>E</th>
+            <th>ET</th>
             <th>TOTAL</th>
             <th>GRADE</th>
           </tr>
@@ -47,6 +49,9 @@
               <input v-model="overAllScore.underScore" class="quiz d-flex" />
             </td>
             <td>{{othersoverAllScores}}</td>
+            <td v-for="(e,index) in form.examScore" :key="index + 'exam'">
+              <input v-model="e.underScore" class="quiz d-flex" />
+            </td>
             <td class="text-center">{{othersoverAllScores + overAllScores}}</td>
           </tr>
 
@@ -70,13 +75,17 @@
               <input v-model="labStudentScore.studentScores[index]" />
             </td>
             <th>{{quizTotal[index]}}</th>
+
             <!-- OTHERS -->
 
             <td v-for="(other,i) in form.others" :key="i+'others'">
               <input v-model="other.studentScores[index]" />
             </td>
             <th>{{othersTotal[index]}}</th>
-            <th class="text-center">{{quizTotal[index] + othersTotal[index]}}</th>
+            <td v-for="(eScore,i) in form.examScore" :key="i+'eScore'">
+              <input v-model="eScore.studentScores[index]" />
+            </td>
+            <th class="text-center">{{quizTotal[index] + othersTotal[index] }}</th>
             <th class="bg-success text-light">99</th>
           </tr>
           <!-- ./MALE -->
@@ -115,6 +124,9 @@
               <input v-model="other.studentScores[index]" />
             </td>
             <th>{{othersTotal[index]}}</th>
+            <td v-for="(eScore,i) in form.examScore" :key="i+'eScore'">
+              <input v-model="eScore.studentScores[index]" />
+            </td>
             <th class="text-center">{{quizTotal[index] + othersTotal[index]}}</th>
             <th class="bg-success text-light">99</th>
           </tr>
@@ -196,7 +208,8 @@ export default {
           { dates: [] },
           { dates: [] }
         ],
-        otherDates: [{ dates: [] }, { dates: [] }, { dates: [] }]
+        otherDates: [{ dates: [] }, { dates: [] }, { dates: [] }],
+        examScore: [{ studentScores: [] }]
       })
     };
   },
@@ -239,13 +252,14 @@ export default {
         const value = parseInt(item.underScore, 10) || 0;
         return acc + value;
       }, 0);
+    },
+    exams: function() {
+      console.log("this.form.exam");
     }
   },
   methods: {
     insertScore() {
-      this.$Progress.start();
       this.form.post("/api/lec");
-      this.$Progress.finish();
     },
     addQuiz: function() {
       this.form.labStudentScores.push({ studentScores: [] });

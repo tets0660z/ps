@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClasslistsTable extends Migration
+class CreateActivitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,17 @@ class CreateClasslistsTable extends Migration
      */
     public function up()
     {
-        Schema::create('classlists', function (Blueprint $table) {
+        Schema::create('activities', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedBigInteger('id_number')->index()->nullable();
-            $table->foreign('id_number')->references('id')->on('users')->onDelete('cascade');
+            $table->string('activity_title');
+            $table->string('hps');
+            $table->string('grading_period');
 
+            $table->unsignedBigInteger('component_id')->index()->nullable();
+            $table->foreign('component_id')->references('id')->on('components');
             $table->unsignedBigInteger('schedule_id')->index()->nullable();
-            $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
-
+            $table->foreign('schedule_id')->references('id')->on('schedules');
             $table->timestamps();
         });
     }
@@ -33,6 +35,6 @@ class CreateClasslistsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('classlists');
+        Schema::dropIfExists('activities');
     }
 }

@@ -40,6 +40,7 @@
             <th v-for="(otherTitle,index) in form.labTitles" :key="index+'labtitle'">
               <input v-model="otherTitle.titles" class="quiz d-flex" />
             </th>
+            <th>E</th>
           </tr>
         </thead>
         <tbody>
@@ -53,9 +54,12 @@
               <input v-model="overAllScore.underScore" class="quiz d-flex" />
             </td>
             <td>{{othersoverAllScores}}</td>
-            <td colspan="2" class="text-center">{{othersoverAllScores + overAllScores}}</td>
+            <td colspan="2" class="bg-primary text-center">{{othersoverAllScores + overAllScores}}</td>
             <td v-for="(hps,index) in form.labHPS" :key="index + 'hps'">
-              <input v-model="hps.underScore" class="quiz d-flex" />
+              <input v-model="hps.studentScores" class="quiz d-flex" />
+            </td>
+            <td v-for="(e,index) in form.exam" :key="index + 'e'">
+              <input v-model="e.underScore" class="quiz d-flex" />
             </td>
           </tr>
 
@@ -66,9 +70,7 @@
             :key="index + 'lab'"
             v-show="classlist.gender === 'male'"
           >
-            <td>
-              <input type="text" v-model="classlist.id" />
-            </td>
+            <td>#</td>
             <td></td>
             <td>
               {{classlist.name}}
@@ -86,7 +88,15 @@
             </td>
             <th>{{othersTotal[index]}}</th>
             <th class="text-center">{{quizTotal[index] + othersTotal[index]}}</th>
-            <th class="bg-success text-light">99</th>
+            <th class="bg-success">99</th>
+            <!-- lab Score -->
+            <td v-for="(Scores,i) in form.slabStudentScores" :key="i+'labS'">
+              <input v-model="Scores.studentScores[index]" />
+            </td>
+            <!-- Exam -->
+            <td v-for="(ex,i) in form.studentExam" :key="i+'exam'">
+              <input v-model="ex.studentScores[index]" />
+            </td>
           </tr>
           <!-- ./MALE -->
           <tr>
@@ -99,7 +109,7 @@
               <input v-model="overAllScore.underScore" class="quiz d-flex" />
             </td>
             <td>{{othersoverAllScores}}</td>
-            <td colspan="2" class="text-center">{{othersoverAllScores + overAllScores}}</td>
+            <td colspan="2" class="bg-primary text-center">{{othersoverAllScores + overAllScores}}</td>
 
             <td v-for="(hps,index) in form.labHPS" :key="index + 'hps'">
               <input v-model="hps.underScore" class="quiz d-flex" />
@@ -129,8 +139,14 @@
             </td>
             <th>{{othersTotal[index]}}</th>
             <th class="text-center">{{quizTotal[index] + othersTotal[index]}}</th>
-            <th class="bg-success text-light">99</th>
+            <th class="bg-success">99</th>
+
+            <!-- lab Score -->
+            <td v-for="(Scores,i) in form.slabStudentScores" :key="i+'labS'">
+              <input v-model="Scores.studentScores[index]" />
+            </td>
           </tr>
+
           <!-- ./FEMALE -->
           <tr>
             <th colspan="4" class="text-center bg-primary">Date</th>
@@ -167,6 +183,7 @@ export default {
   },
   data() {
     return {
+      count: 0,
       form: new Form({
         labStudentScores: [
           { studentScores: [] },
@@ -211,7 +228,15 @@ export default {
         ],
         otherDates: [{ dates: [] }, { dates: [] }, { dates: [] }],
         labTitles: [{ titles: [] }, { titles: [] }, { titles: [] }],
-        labHPS: [{ underScore: [] }, { underScore: [] }, { underScore: [] }]
+        labHPS: [{ underScore: [] }, { underScore: [] }, { underScore: [] }],
+        slabStudentScores: [
+          { studentScores: [] },
+          { studentScores: [] },
+          { studentScores: [] }
+        ],
+        studentExam: [{ studentScores: [] }],
+        exam: [{ underScore: [] }],
+        nature: "leclab4060"
       })
     };
   },
@@ -220,7 +245,7 @@ export default {
       return this.form.labStudentScores.length + 1;
     },
     countOthers: function() {
-      return this.form.others.length;
+      return this.form.others.length + 1;
     },
     displayScores() {
       axios
@@ -258,9 +283,7 @@ export default {
   },
   methods: {
     insertScore() {
-      this.$Progress.start();
-      this.form.post("/api/lec");
-      this.$Progress.finish();
+      this.form.post("/api/leclab4060");
     },
     addQuiz: function() {
       this.form.labStudentScores.push({ studentScores: [] });

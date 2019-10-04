@@ -2589,6 +2589,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2673,6 +2685,9 @@ __webpack_require__.r(__webpack_exports__);
           dates: []
         }, {
           dates: []
+        }],
+        examScore: [{
+          studentScores: []
         }]
       })
     };
@@ -2723,13 +2738,14 @@ __webpack_require__.r(__webpack_exports__);
         var value = parseInt(item.underScore, 10) || 0;
         return acc + value;
       }, 0);
+    },
+    exams: function exams() {
+      console.log("this.form.exam");
     }
   },
   methods: {
     insertScore: function insertScore() {
-      this.$Progress.start();
       this.form.post("/api/lec");
-      this.$Progress.finish();
     },
     addQuiz: function addQuiz() {
       this.form.labStudentScores.push({
@@ -2933,6 +2949,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2943,6 +2975,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      count: 0,
       form: new Form({
         labStudentScores: [{
           studentScores: []
@@ -3031,7 +3064,21 @@ __webpack_require__.r(__webpack_exports__);
           underScore: []
         }, {
           underScore: []
-        }]
+        }],
+        slabStudentScores: [{
+          studentScores: []
+        }, {
+          studentScores: []
+        }, {
+          studentScores: []
+        }],
+        studentExam: [{
+          studentScores: []
+        }],
+        exam: [{
+          underScore: []
+        }],
+        nature: "leclab4060"
       })
     };
   },
@@ -3040,7 +3087,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.form.labStudentScores.length + 1;
     },
     countOthers: function countOthers() {
-      return this.form.others.length;
+      return this.form.others.length + 1;
     },
     displayScores: function displayScores() {
       var _this = this;
@@ -3085,9 +3132,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     insertScore: function insertScore() {
-      this.$Progress.start();
-      this.form.post("/api/lec");
-      this.$Progress.finish();
+      this.form.post("/api/leclab4060");
     },
     addQuiz: function addQuiz() {
       this.form.labStudentScores.push({
@@ -45914,6 +45959,10 @@ var render = function() {
                 _vm._v(" "),
                 _c("th", [_vm._v("OT")]),
                 _vm._v(" "),
+                _c("th", [_vm._v("E")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("ET")]),
+                _vm._v(" "),
                 _c("th", [_vm._v("TOTAL")]),
                 _vm._v(" "),
                 _c("th", [_vm._v("GRADE")])
@@ -46001,6 +46050,31 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(_vm.othersoverAllScores))]),
+                  _vm._v(" "),
+                  _vm._l(_vm.form.examScore, function(e, index) {
+                    return _c("td", { key: index + "exam" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: e.underScore,
+                            expression: "e.underScore"
+                          }
+                        ],
+                        staticClass: "quiz d-flex",
+                        domProps: { value: e.underScore },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(e, "underScore", $event.target.value)
+                          }
+                        }
+                      })
+                    ])
+                  }),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center" }, [
                     _vm._v(_vm._s(_vm.othersoverAllScores + _vm.overAllScores))
@@ -46143,6 +46217,34 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("th", [_vm._v(_vm._s(_vm.othersTotal[index]))]),
+                    _vm._v(" "),
+                    _vm._l(_vm.form.examScore, function(eScore, i) {
+                      return _c("td", { key: i + "eScore" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: eScore.studentScores[index],
+                              expression: "eScore.studentScores[index]"
+                            }
+                          ],
+                          domProps: { value: eScore.studentScores[index] },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                eScore.studentScores,
+                                index,
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    }),
                     _vm._v(" "),
                     _c("th", { staticClass: "text-center" }, [
                       _vm._v(
@@ -46330,6 +46432,34 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("th", [_vm._v(_vm._s(_vm.othersTotal[index]))]),
+                    _vm._v(" "),
+                    _vm._l(_vm.form.examScore, function(eScore, i) {
+                      return _c("td", { key: i + "eScore" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: eScore.studentScores[index],
+                              expression: "eScore.studentScores[index]"
+                            }
+                          ],
+                          domProps: { value: eScore.studentScores[index] },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                eScore.studentScores,
+                                index,
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    }),
                     _vm._v(" "),
                     _c("th", { staticClass: "text-center" }, [
                       _vm._v(
@@ -46608,7 +46738,9 @@ var render = function() {
                       }
                     })
                   ])
-                })
+                }),
+                _vm._v(" "),
+                _c("th", [_vm._v("E")])
               ],
               2
             )
@@ -46696,7 +46828,10 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "td",
-                    { staticClass: "text-center", attrs: { colspan: "2" } },
+                    {
+                      staticClass: "bg-primary text-center",
+                      attrs: { colspan: "2" }
+                    },
                     [
                       _vm._v(
                         _vm._s(_vm.othersoverAllScores + _vm.overAllScores)
@@ -46711,18 +46846,43 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: hps.underScore,
-                            expression: "hps.underScore"
+                            value: hps.studentScores,
+                            expression: "hps.studentScores"
                           }
                         ],
                         staticClass: "quiz d-flex",
-                        domProps: { value: hps.underScore },
+                        domProps: { value: hps.studentScores },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(hps, "underScore", $event.target.value)
+                            _vm.$set(hps, "studentScores", $event.target.value)
+                          }
+                        }
+                      })
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _vm._l(_vm.form.exam, function(e, index) {
+                    return _c("td", { key: index + "e" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: e.underScore,
+                            expression: "e.underScore"
+                          }
+                        ],
+                        staticClass: "quiz d-flex",
+                        domProps: { value: e.underScore },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(e, "underScore", $event.target.value)
                           }
                         }
                       })
@@ -46747,28 +46907,7 @@ var render = function() {
                     key: index + "lab"
                   },
                   [
-                    _c("td", [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: classlist.id,
-                            expression: "classlist.id"
-                          }
-                        ],
-                        attrs: { type: "text" },
-                        domProps: { value: classlist.id },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(classlist, "id", $event.target.value)
-                          }
-                        }
-                      })
-                    ]),
+                    _c("td", [_vm._v("#")]),
                     _vm._v(" "),
                     _c("td"),
                     _vm._v(" "),
@@ -46873,9 +47012,63 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _c("th", { staticClass: "bg-success text-light" }, [
-                      _vm._v("99")
-                    ])
+                    _c("th", { staticClass: "bg-success" }, [_vm._v("99")]),
+                    _vm._v(" "),
+                    _vm._l(_vm.form.slabStudentScores, function(Scores, i) {
+                      return _c("td", { key: i + "labS" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: Scores.studentScores[index],
+                              expression: "Scores.studentScores[index]"
+                            }
+                          ],
+                          domProps: { value: Scores.studentScores[index] },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                Scores.studentScores,
+                                index,
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _vm._l(_vm.form.studentExam, function(ex, i) {
+                      return _c("td", { key: i + "exam" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: ex.studentScores[index],
+                              expression: "ex.studentScores[index]"
+                            }
+                          ],
+                          domProps: { value: ex.studentScores[index] },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                ex.studentScores,
+                                index,
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    })
                   ],
                   2
                 )
@@ -46961,7 +47154,10 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "td",
-                    { staticClass: "text-center", attrs: { colspan: "2" } },
+                    {
+                      staticClass: "bg-primary text-center",
+                      attrs: { colspan: "2" }
+                    },
                     [
                       _vm._v(
                         _vm._s(_vm.othersoverAllScores + _vm.overAllScores)
@@ -47091,9 +47287,35 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _c("th", { staticClass: "bg-success text-light" }, [
-                      _vm._v("99")
-                    ])
+                    _c("th", { staticClass: "bg-success" }, [_vm._v("99")]),
+                    _vm._v(" "),
+                    _vm._l(_vm.form.slabStudentScores, function(Scores, i) {
+                      return _c("td", { key: i + "labS" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: Scores.studentScores[index],
+                              expression: "Scores.studentScores[index]"
+                            }
+                          ],
+                          domProps: { value: Scores.studentScores[index] },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                Scores.studentScores,
+                                index,
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    })
                   ],
                   2
                 )

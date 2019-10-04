@@ -12,14 +12,8 @@ class Schedule extends Model
     {
         return $this->belongsTo(User::class,'instructor_id');
     }
-    public function subjects()
+    public function students()
     {
-        return $this->hasMany(Subject::class, 'subject_id');
+        return $this->belongsToMany(Student::class);
     }
-
-    public function classlists()
-    {
-        return $this->hasMany(Classlist::class, 'schedule_id');
-    }
-    
 }

@@ -28,6 +28,7 @@ Route::get('sections','API\ClasslistController@index')->name('section');
 Route::get('classlists/{section}','API\ClasslistController@show');
 
 Route::post('lec/{id}','API\LecturesController@store');
+Route::post('leclab4060','API\LecLab4060@store');
 
 Route::post('lec','API\LecturesController@store');
 // Route::post('lec/{id}', function () {
