@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mb-2">
-      <h1>First Grading</h1>
+      <h2>First Grading(Lec)</h2>
     </div>
     <!-- {{form.titles}} -->
     <form @submit.prevent="insertScore">

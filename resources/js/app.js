@@ -52,7 +52,7 @@ const routes = [
         path: "/classrecord/labview/:placeName",
         name: "labview",
         props: true,
-        component: require("./components/classrecords/LabDisplay.vue").default
+        component: require("./components/classrecords/ShowStudents.vue").default
     }
 ];
 

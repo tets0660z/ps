@@ -6,7 +6,7 @@ use App\Laboratory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\ClassRecord;
-use App\ImportedClasslist;
+use App\Student;
 use DB;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -20,7 +20,7 @@ class LaboratoriesController extends Controller
      */
     public function index($section)
     {
-        return ImportedClasslist::with('classrecords')->where('sections',$section)->get();
+        return Student::with('schedules')->where('sections',$section)->get();
         // return $classlists;
         
     }

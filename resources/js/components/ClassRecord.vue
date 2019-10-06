@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="mb-3">
+  <div class="container-fluid">
+    <div class="py-3">
       <span
         class="tab"
         :class="{ activeTab: selectedTab === tab }"
@@ -14,6 +14,7 @@
     <LecLab4060 v-show="selectedTab === 'Lec-Lab40-60'" :classlists="classlists"></LecLab4060>
     <LecLab5050 v-show="selectedTab === 'Lec-Lab50-50'" :classlists="classlists"></LecLab5050>
     <LecLab6040 v-show="selectedTab === 'Lec-Lab60-40'"></LecLab6040>
+    <div class="footer mt-auto py-3 text-danger"></div>
   </div>
 </template>
 
@@ -62,11 +63,20 @@ export default {
 <style scoped>
 .activeTab {
   color: rgb(226, 115, 11);
+  /* color: #000; */
   cursor: pointer;
   border-bottom: 1px solid rgb(226, 115, 11);
 }
 .tab {
   cursor: pointer;
   padding: 6px;
+}
+.footer {
+  position: fixed;
+  height: 100px;
+  top: 10;
+  bottom: 0;
+  width: 100%;
+  /* background: bisque; */
 }
 </style>

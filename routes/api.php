@@ -21,7 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Route::apiResource('classrecords', 'API\ClassRecordsController');
 // Route::post('lab', 'API\LaboratoriesController@store');
 
-Route::get('labview/{section}', 'API\LaboratoriesController@index');
+Route::get('showstudents/{section}', 'API\ShowStudentsController@index');
 
 Route::get('sections','API\ClasslistController@index')->name('section');
 

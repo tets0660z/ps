@@ -33,7 +33,7 @@
         <tr v-for="(c,index) in classlists" :key="index" v-show="c.gender ==='male'">
           <td>{{c.id}}</td>
           <td></td>
-          <td>{{c.student}}</td>
+          <td>{{c.name}}</td>
           <td>{{c.course}}</td>
           <td
             v-for="(n,x) in c.classrecords.length"
@@ -93,7 +93,7 @@ export default {
     displayClasslists() {
       this.$Progress.start();
       axios
-        .get(`/api/labview/${this.$route.params.placeName}`)
+        .get(`/api/showstudents/${this.$route.params.placeName}`)
         .then(({ data }) => {
           this.classlists = data;
           this.$Progress.finish();
@@ -103,21 +103,21 @@ export default {
   computed: {
     uScore: function() {
       //under score
-      for (let index = 0; index < this.classlists.length; index++) {
-        let sum = null;
-        const element = this.classlists[index].classrecords;
-        element.forEach(element => {
-          sum += element.lab_score;
-        });
-        return sum;
-      }
+      // for (let index = 0; index < this.classlists.length; index++) {
+      //   let sum = null;
+      //   const element = this.classlists[index].classrecords;
+      //   element.forEach(element => {
+      //     sum += element.lab_score;
+      //   });
+      //   return sum;
+      // }
     },
     classRecord() {
-      for (let index = 0; index < this.classlists.length; index++) {
-        const element = this.classlists[index].classrecords;
-        // console.log(element);
-        return element;
-      }
+      // for (let index = 0; index < this.classlists.length; index++) {
+      //   const element = this.classlists[index].classrecords;
+      //   // console.log(element);
+      //   return element;
+      // }
     },
     studentScore() {
       let ele = [];

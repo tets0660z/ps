@@ -5,19 +5,28 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
-use App\Student;
+use App\Score;
 use App\Schedule;
-class ClasslistController extends Controller
+class ShowStudentsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($section)
     {
-    return DB::table('schedules')->distinct()->get();
-    // return ImportedClasslist::all();
+        $records = DB::table('scores')
+        ->select('scores','hps','activity_title','dates','name','hps','gender','section')
+        ->join('activities','scores.activity_id','activities.id')
+        ->join('students','scores.student_id','students.id')
+        ->join('users','users.id','students.id_number')
+        ->join('schedules','activities.schedule_id','schedules.id')
+        ->where('section',$section)->get();
+        
+// dd($records);
+        
+        return $records;
     }
 
     /**
@@ -37,23 +46,14 @@ class ClasslistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($section)
+    public function show($id)
     {
-      
-        $users = DB::table('schedule_student')
-        ->select('name','section','gender')
-        ->join('students','students.id','schedule_student.student_id')
-        ->join('users','students.id_number','users.id')
-        ->join('schedules','schedule_student.schedule_id','schedules.id')
-        ->where('section',$section)->get();
-
-        // dd($users);
-        return $users;
-   
+        //
     }
+
     /**
      * Update the specified resource in storage.
-     * 
+     *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response

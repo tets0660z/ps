@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mb-2">
-      <h1>First Grading</h1>
+      <h1>First Grading (LecLab 40-60)</h1>
     </div>
     <!-- {{form.titles}} -->
     <form @submit.prevent="insertScore">

@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
-// use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-
 use App\Http\Controllers\Controller;
-use App\ClassRecord;
+use App\Student;
+use App\Schedule;
 class ClassRecordsController extends Controller
 {
     /**

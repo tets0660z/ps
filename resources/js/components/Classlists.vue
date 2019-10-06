@@ -6,6 +6,7 @@
         <tr>
           <th scope="col">Section</th>
           <th scope="col">Subject</th>
+          <th scope="col">Grading Period</th>
         </tr>
       </thead>
       <tbody>
@@ -16,7 +17,25 @@
               :to="{name:'classrecord',params:{placeName: section.section}}"
             >{{section.section}}</router-link>
             <router-link :to="{name:'labview',params:{placeName: section.section}}">view</router-link>
-            
+          </td>
+          <td>
+            <router-link
+              :to="{name:'classrecord',params:{placeName: section.section}}"
+            >{{section.subject}}</router-link>
+          </td>
+          <td>
+            <select>
+              <option value="volvo">First Grading</option>
+              <option value="mercedes">Midterm</option>
+              <option value="audi">Finals</option>
+            </select>
+            <select>
+              <option value="volvo">Lec</option>
+              <option value="mercedes">Lab</option>
+              <option value="audi">LecLab 40-60</option>
+              <option value="audi">LecLab 40-60</option>
+              <option value="audi">LecLab 40-60</option>
+            </select>
           </td>
         </tr>
       </tbody>
